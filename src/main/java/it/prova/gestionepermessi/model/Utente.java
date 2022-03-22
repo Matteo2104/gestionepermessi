@@ -19,6 +19,10 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 
+
+
+
+
 @Entity
 @Table(name = "utente")
 public class Utente {
@@ -46,4 +50,121 @@ public class Utente {
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "utenteInserimento")
 	private Set<Messaggio> messaggi = new HashSet<>();
+
+	public Utente() {
+	}
+
+	public Utente(String username, String password) {
+		super();
+		this.username = username;
+		this.password = password;
+	}
+
+	public Utente(String username, String password, String nome, String cognome, Date dateCreated) {
+		this.username = username;
+		this.password = password;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.dateCreated = dateCreated;
+	}
+
+	public Utente(Long id, String username, String password, String nome, String cognome, Date dateCreated,
+			StatoUtente stato) {
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.dateCreated = dateCreated;
+		this.stato = stato;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public String getNome() {
+		return nome;
+	}
+
+	public String getCognome() {
+		return cognome;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public StatoUtente getStato() {
+		return stato;
+	}
+
+	public Set<Ruolo> getRuoli() {
+		return ruoli;
+	}
+
+	public Set<Messaggio> getMessaggi() {
+		return messaggi;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public void setNome(String nome) {
+		this.nome = nome;
+	}
+
+	public void setCognome(String cognome) {
+		this.cognome = cognome;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
+	public void setStato(StatoUtente stato) {
+		this.stato = stato;
+	}
+
+	public void setRuoli(Set<Ruolo> ruoli) {
+		this.ruoli = ruoli;
+	}
+
+	public void setMessaggi(Set<Messaggio> messaggi) {
+		this.messaggi = messaggi;
+	}
+	
+	
+	public boolean isAttivo() {
+		return this.stato != null && this.stato.equals(StatoUtente.ATTIVO);
+	}
+	
+	public boolean isDisabilitato() {
+		return this.stato != null && this.stato.equals(StatoUtente.DISABILITATO);
+	}
+
+	@Override
+	public String toString() {
+		return "Utente [id=" + id + ", nome=" + nome + ", cognome=" + cognome + ", username=" + username + ", password="
+				+ password + ", dateCreated=" + dateCreated + ", stato=" + stato + "]";
+	}
+	
+	
 }
