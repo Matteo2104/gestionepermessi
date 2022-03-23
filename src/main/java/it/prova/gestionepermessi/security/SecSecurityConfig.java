@@ -37,7 +37,7 @@ public class SecSecurityConfig extends WebSecurityConfigurerAdapter {
     	 http.authorizeRequests()
          .antMatchers("/assets/**").permitAll()
          .antMatchers("/login").permitAll()
-         .antMatchers("/utente/**").hasRole("ADMIN_USER")
+         //.antMatchers("/utente/**").hasRole("ADMIN_USER")
          .antMatchers("/**").hasAnyRole("ADMIN_USER", "BO_USER", "DIPENDENTE_USER")
          //.antMatchers("/anonymous*").anonymous()
          .anyRequest().authenticated()

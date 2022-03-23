@@ -29,6 +29,7 @@ import it.prova.gestionepermessi.service.DipendenteService;
 import it.prova.gestionepermessi.service.RuoloService;
 import it.prova.gestionepermessi.service.UtenteService;
 import it.prova.gestionepermessi.validation.ValidationNoPassword;
+import it.prova.gestionepermessi.validation.ValidationWithPassword;
 
 @Controller
 @RequestMapping(value = "/dipendente")
@@ -118,7 +119,39 @@ public class DipendenteController {
 		dipendenteService.aggiornaDipendente(dipendenteDTO.buildDipendenteModel(false));
 		
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
-		return "redirect:/utente";
+		return "redirect:/dipendente";
 	}
+	
+	// CICLO INSERIMENTO
+	@GetMapping("/insert")
+	public String create(Model model) {
+		model.addAttribute("ruoli_totali_attr", RuoloDTO.createRuoloDTOListFromModelList(ruoloService.listAll()));
+		model.addAttribute("insert_dipendente_attr", new DipendenteDTO());
+		return "dipendente/insert";
+	}
+
+	@PostMapping("/save")
+	public String save(
+			@Validated(ValidationWithPassword.class) @ModelAttribute("insert_dipendente_attr") DipendenteDTO dipendenteDTO,
+			BindingResult result, Model model, RedirectAttributes redirectAttrs) {
+
+		// System.out.println(utenteDTO);
+		/*
+		 * if (!result.hasFieldErrors("password") &&
+		 * !utenteDTO.getPassword().equals(utenteDTO.getConfermaPassword()))
+		 * result.rejectValue("confermaPassword", "password.diverse");
+		 */
+
+		if (result.hasErrors()) {
+			model.addAttribute("ruoli_totali_attr", RuoloDTO.createRuoloDTOListFromModelList(ruoloService.listAll()));
+			return "dipendente/insert";
+		}
+
+		dipendenteService.inserisciNuovo(dipendenteDTO.buildDipendenteModel(false));
+
+		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
+		return "redirect:/dipendente";
+	}
+	
 	
 }

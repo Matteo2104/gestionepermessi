@@ -12,7 +12,7 @@
 		    }
 		</style>
 	   
-	   <title>Inserisci Nuovo Utente</title>
+	   <title>Inserisci Nuovo Dipendente</title>
 	 </head>
 	   <body class="d-flex flex-column h-100">
 	   
@@ -25,7 +25,7 @@
 			  <div class="container">
 			  
 			  		<%-- se l'attributo in request ha errori --%>
-					<spring:hasBindErrors  name="insert_utente_attr">
+					<spring:hasBindErrors  name="insert_dipendente_attr">
 						<%-- alert errori --%>
 						<div class="alert alert-danger " role="alert">
 							Attenzione!! Sono presenti errori di validazione
@@ -39,20 +39,20 @@
 			  
 			  <div class='card'>
 				    <div class='card-header'>
-				        <h5>Inserisci nuovo utente</h5> 
+				        <h5>Inserisci nuovo dipendente</h5> 
 				    </div>
 				    <div class='card-body'>
 		
 							<h6 class="card-title">I campi con <span class="text-danger">*</span> sono obbligatori</h6>
 		
 		
-							<form:form modelAttribute="insert_utente_attr" method="post" action="save" novalidate="novalidate" class="row g-3">
+							<form:form modelAttribute="insert_dipendente_attr" method="post" action="save" novalidate="novalidate" class="row g-3">
 					
 							
 								<div class="col-md-6">
 									<label for="nome" class="form-label">Nome <span class="text-danger">*</span></label>
 									<spring:bind path="nome">
-										<input type="text" name="nome" id="nome" class="form-control ${status.error ? 'is-invalid' : ''}" placeholder="Inserire il nome" value="${insert_utente_attr.nome }" required>
+										<input type="text" name="nome" id="nome" class="form-control ${status.error ? 'is-invalid' : ''}" placeholder="Inserire il nome" value="${insert_dipendente_attr.nome }" required>
 									</spring:bind>
 									<form:errors  path="nome" cssClass="error_field" />
 								</div>
@@ -60,12 +60,37 @@
 								<div class="col-md-6">
 									<label for="cognome" class="form-label">Cognome <span class="text-danger">*</span></label>
 									<spring:bind path="cognome">
-										<input type="text" name="cognome" id="cognome" class="form-control ${status.error ? 'is-invalid' : ''}" placeholder="Inserire il cognome" value="${insert_utente_attr.cognome }" required>
+										<input type="text" name="cognome" id="cognome" class="form-control ${status.error ? 'is-invalid' : ''}" placeholder="Inserire il cognome" value="${insert_dipendente_attr.cognome }" required>
 									</spring:bind>
 									<form:errors  path="cognome" cssClass="error_field" />
 								</div>
 							
-								 
+								 <div class="col-md-6">
+								<label for="dataNascita" class="form-label">Data di Nascita</label>
+                        		<input class="form-control" id="dataNascita" type="date" placeholder="dd/MM/yy"
+                            		title="formato : gg/mm/aaaa"  name="dataNascita" >
+								</div>
+								
+								<div class="col-md-6">
+									<label for="dataAssunzione" class="form-label">Data di Assunzione</label>
+	                        		<input class="form-control" id="dataAssunzione" type="date" placeholder="dd/MM/yy"
+	                            		title="formato : gg/mm/aaaa"  name="datdataAssunzioneeCreated" >
+								</div>
+								
+								<div class="col-md-6">
+									<label for="dataDimissioni" class="form-label">Data Dimissioni</label>
+	                        		<input class="form-control" id="dataDimissioni" type="date" placeholder="dd/MM/yy"
+	                            		title="formato : gg/mm/aaaa"  name="dataDimissioni" >
+								</div>
+								
+								<div class="col-md-3">
+									<label for="sesso" class="form-label">Sesso</label>
+									    <select class="form-select " id="sesso" name="sesso" >
+									    	<option value="" selected> - Selezionare - </option>
+									      	<option value="MASCHIO" >Maschio</option>
+									    	<option value="FEMMINA">Femmina</option>
+								    	</select>
+								</div>
 								
 								
 								
@@ -73,7 +98,7 @@
 								<%-- facendolo con i tag di spring purtroppo viene un po' spaginato quindi aggiungo class 'a mano'	--%>
 								<div class="col-md-6 form-check" id="ruoliDivId">
 									<p>Ruoli:</p>
-									<form:checkboxes itemValue="id" itemLabel="codice"  element="div class='form-check'" items="${ruoli_totali_attr}" path="ruoliIds" />
+									<form:checkboxes itemValue="id" itemLabel="codice"  element="div class='form-check'" items="${ruoli_totali_attr}" path="utente" />
 								</div>
 								<script>
 									$(document).ready(function(){

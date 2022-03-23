@@ -14,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.domain.Specification;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -28,6 +29,9 @@ public class DipendenteServiceImpl implements DipendenteService {
 	private DipendenteRepository repository;
 	@Autowired
 	private UtenteRepository utenteRepository;
+	
+	@Autowired
+	private PasswordEncoder passwordEncoder;
 	
 	@Value("${defaultPassword}")
 	private String defaultPassword;
@@ -67,11 +71,14 @@ public class DipendenteServiceImpl implements DipendenteService {
 	@Transactional
 	public void inserisciNuovo(Dipendente dipendente) {
 		String username = dipendente.getNome().substring(0, 1) + "." + dipendente.getCognome();
-		Utente utente = new Utente(username, defaultPassword, dipendente.getNome(), dipendente.getCognome(), new Date());
+		Utente utente = new Utente(username, passwordEncoder.encode(defaultPassword), dipendente.getNome(), dipendente.getCognome(), new Date());
+		
+		dipendente.setEmail(username + "@azienda.it");
 		
 		dipendente.setUtente(utente);
 		utente.setDipendente(dipendente);
 		
+		utenteRepository.save(utente);
 		repository.save(dipendente);
 	}
 	
