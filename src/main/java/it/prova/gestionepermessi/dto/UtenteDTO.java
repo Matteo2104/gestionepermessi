@@ -17,8 +17,7 @@ import it.prova.gestionepermessi.model.Utente;
 public class UtenteDTO {
 	private Long id;
 
-	@NotBlank(message = "{username.notblank}")
-	@Size(min = 3, max = 15, message = "Il valore inserito '${validatedValue}' deve essere lungo tra {min} e {max} caratteri")
+	
 	private String username;
 
 	@NotBlank(message = "{password.notblank}")
@@ -151,4 +150,12 @@ public class UtenteDTO {
 		}).collect(Collectors.toList());
 	}
 
+	@Override
+	public String toString() {
+		return "UtenteDTO [id=" + id + ", username=" + username + ", password=" + password + ", confermaPassword="
+				+ confermaPassword + ", nome=" + nome + ", cognome=" + cognome + ", dateCreated=" + dateCreated
+				+ ", stato=" + stato + "]";
+	}
+
+	
 }

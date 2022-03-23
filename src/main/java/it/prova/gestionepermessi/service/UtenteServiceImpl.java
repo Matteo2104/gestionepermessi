@@ -31,6 +31,12 @@ public class UtenteServiceImpl implements UtenteService {
 	private PasswordEncoder passwordEncoder;
 	
 	@Override
+	@Transactional(readOnly = true)
+	public List<Utente> listAllUtenti() {
+		return (List<Utente>) repository.findAll();
+	}
+	
+	@Override
 	@Transactional
 	public Utente findByUsername(String username) {
 		return repository.findByUsername(username).orElse(null);
@@ -42,6 +48,7 @@ public class UtenteServiceImpl implements UtenteService {
 		utenteInstance.setStato(StatoUtente.CREATO);
 		utenteInstance.setPassword(passwordEncoder.encode(utenteInstance.getPassword())); 
 		utenteInstance.setDateCreated(new Date());
+		utenteInstance.setUsername(utenteInstance.getNome().substring(0, 1) + "." + utenteInstance.getCognome());
 		repository.save(utenteInstance);
 	}
 	
