@@ -54,6 +54,20 @@ public class UtenteServiceImpl implements UtenteService {
 	
 	@Override
 	@Transactional
+	public void aggiorna(Utente utenteInstance) {
+		Utente utenteReloaded = repository.findById(utenteInstance.getId()).orElse(null);
+		if(utenteReloaded == null)
+			throw new RuntimeException("Elemento non trovato");
+		
+		utenteReloaded.setNome(utenteInstance.getNome());
+		utenteReloaded.setCognome(utenteInstance.getCognome());
+		utenteReloaded.setUsername(utenteInstance.getNome().substring(0, 1) + "." + utenteInstance.getCognome());
+		utenteReloaded.setRuoli(utenteInstance.getRuoli());
+		repository.save(utenteReloaded);
+	}
+	
+	@Override
+	@Transactional
 	public void changeUserAbilitation(Long utenteInstanceId) {
 		Utente utenteInstance = caricaSingoloUtente(utenteInstanceId);
 		if(utenteInstance == null)

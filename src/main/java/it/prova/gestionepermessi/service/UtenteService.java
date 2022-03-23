@@ -22,4 +22,6 @@ public interface UtenteService {
 
 	public Utente caricaSingoloUtenteConRuoli(Long id);
 
+	public void aggiorna(Utente utenteInstance);
+
 }

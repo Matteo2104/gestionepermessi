@@ -3,6 +3,7 @@ package it.prova.gestionepermessi.web.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -94,14 +95,15 @@ public class UtenteController {
 		return "utente/insert";
 	}
 	@PostMapping("/save")
-	public String save(@Valid @ModelAttribute("insert_utente_attr") UtenteDTO utenteDTO,
+	public String save(@Validated(ValidationWithPassword.class) @ModelAttribute("insert_utente_attr") UtenteDTO utenteDTO,
 			BindingResult result, Model model, RedirectAttributes redirectAttrs) {
 
-		System.out.println(utenteDTO);
-		
+		//System.out.println(utenteDTO);
+		/*
 		if (!result.hasFieldErrors("password") && !utenteDTO.getPassword().equals(utenteDTO.getConfermaPassword()))
 			result.rejectValue("confermaPassword", "password.diverse");
-
+		*/
+		
 		if (result.hasErrors()) {
 			model.addAttribute("ruoli_totali_attr", RuoloDTO.createRuoloDTOListFromModelList(ruoloService.listAll()));
 			return "utente/insert";
@@ -119,13 +121,34 @@ public class UtenteController {
 		Utente utente = utenteService.caricaSingoloUtenteConRuoli(idUtente);
 		UtenteDTO utenteDTO = UtenteDTO.buildUtenteDTOFromModel(utente);
 		
-		
 		//System.out.println(utente);
 		
 		model.addAttribute("show_utente_attr", utenteDTO);
 		model.addAttribute("show_ruoli_attr", RuoloDTO.createRuoloDTOListFromModelSet(utente.getRuoli()));
 		
 		return "utente/show";
+	}
+	
+	// CICLO MODIFICA
+	@GetMapping("/edit/{idUtente}")
+	public String edit(@PathVariable(required = true) Long idUtente, Model model) {
+		Utente utenteModel = utenteService.caricaSingoloUtenteConRuoli(idUtente);
+		model.addAttribute("edit_utente_attr", UtenteDTO.buildUtenteDTOFromModel(utenteModel));
+		model.addAttribute("ruoli_totali_attr", RuoloDTO.createRuoloDTOListFromModelList(ruoloService.listAll()));
+		return "utente/edit";
+	}
+	@PostMapping("/update")
+	public String update(@Validated(ValidationNoPassword.class) @ModelAttribute("edit_utente_attr") UtenteDTO utenteDTO,
+			BindingResult result, Model model, RedirectAttributes redirectAttrs, HttpServletRequest request) {
+
+		if (result.hasErrors()) {
+			model.addAttribute("ruoli_totali_attr", RuoloDTO.createRuoloDTOListFromModelList(ruoloService.listAll()));
+			return "utente/edit";
+		}
+		utenteService.aggiorna(utenteDTO.buildUtenteModel(true));
+
+		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
+		return "redirect:/utente";
 	}
 	
 }

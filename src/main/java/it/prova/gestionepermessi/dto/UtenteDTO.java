@@ -11,6 +11,8 @@ import javax.validation.constraints.Size;
 import it.prova.gestionepermessi.model.Ruolo;
 import it.prova.gestionepermessi.model.StatoUtente;
 import it.prova.gestionepermessi.model.Utente;
+import it.prova.gestionepermessi.validation.ValidationNoPassword;
+import it.prova.gestionepermessi.validation.ValidationWithPassword;
 
 
 
@@ -18,17 +20,17 @@ public class UtenteDTO {
 	private Long id;
 	
 	private String username;
-
-	@NotBlank(message = "{password.notblank}")
-	@Size(min = 8, max = 15, message = "Il valore inserito deve essere lungo tra {min} e {max} caratteri")
+	
+	//@NotBlank(message = "{password.notblank}", groups = { ValidationWithPassword.class})
+	//@Size(min = 8, max = 15, message = "Il valore inserito deve essere lungo tra {min} e {max} caratteri")
 	private String password;
 
 	private String confermaPassword;
 
-	@NotBlank(message = "{nome.notblank}")
+	@NotBlank(message = "{nome.notblank}", groups = { ValidationWithPassword.class, ValidationNoPassword.class})
 	private String nome;
 
-	@NotBlank(message = "{cognome.notblank}")
+	@NotBlank(message = "{cognome.notblank}", groups = { ValidationWithPassword.class, ValidationNoPassword.class})
 	private String cognome;
 
 	private Date dateCreated;
