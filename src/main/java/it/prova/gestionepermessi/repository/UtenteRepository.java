@@ -11,7 +11,7 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import it.prova.gestionepermessi.model.Ruolo;
 import it.prova.gestionepermessi.model.Utente;
 
-public interface UtenteRepository extends CrudRepository<Utente, Long>, PagingAndSortingRepository<Utente, Long>, JpaSpecificationExecutor<Utente>{
+public interface UtenteRepository extends CrudRepository<Utente, Long>, PagingAndSortingRepository<Utente, Long>, JpaSpecificationExecutor<Utente> {
 	@EntityGraph(attributePaths = { "ruoli" })
 	Optional<Utente> findByUsername(String username);
 	
