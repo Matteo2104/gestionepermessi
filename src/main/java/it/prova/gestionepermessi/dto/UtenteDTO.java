@@ -16,7 +16,6 @@ import it.prova.gestionepermessi.model.Utente;
 
 public class UtenteDTO {
 	private Long id;
-
 	
 	private String username;
 
@@ -41,12 +40,13 @@ public class UtenteDTO {
 	public UtenteDTO() {
 	}
 
-	public UtenteDTO(Long id, String username, String nome, String cognome, StatoUtente stato) {
+	public UtenteDTO(Long id, String username, String nome, String cognome, Date dateCreated, StatoUtente stato) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.nome = nome;
 		this.cognome = cognome;
+		this.dateCreated = dateCreated;
 		this.stato = stato;
 	}
 
@@ -135,7 +135,7 @@ public class UtenteDTO {
 	// niente password...
 	public static UtenteDTO buildUtenteDTOFromModel(Utente utenteModel) {
 		UtenteDTO result = new UtenteDTO(utenteModel.getId(), utenteModel.getUsername(), utenteModel.getNome(),
-				utenteModel.getCognome(), utenteModel.getStato());
+				utenteModel.getCognome(), utenteModel.getDateCreated(), utenteModel.getStato());
 
 		if (!utenteModel.getRuoli().isEmpty())
 			result.ruoliIds = utenteModel.getRuoli().stream().map(r -> r.getId()).collect(Collectors.toList())

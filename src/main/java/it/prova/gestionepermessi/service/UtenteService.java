@@ -20,4 +20,6 @@ public interface UtenteService {
 
 	public List<Utente> listAllUtenti();
 
+	public Utente caricaSingoloUtenteConRuoli(Long id);
+
 }

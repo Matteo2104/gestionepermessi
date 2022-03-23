@@ -15,6 +15,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
@@ -110,6 +111,21 @@ public class UtenteController {
 
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 		return "redirect:/utente";
+	}
+	
+	// CICLO VISUALIZZAZIONE
+	@GetMapping("/show/{idUtente}")
+	public String show(@PathVariable(required = true) Long idUtente, Model model) {
+		Utente utente = utenteService.caricaSingoloUtenteConRuoli(idUtente);
+		UtenteDTO utenteDTO = UtenteDTO.buildUtenteDTOFromModel(utente);
+		
+		
+		//System.out.println(utente);
+		
+		model.addAttribute("show_utente_attr", utenteDTO);
+		model.addAttribute("show_ruoli_attr", RuoloDTO.createRuoloDTOListFromModelSet(utente.getRuoli()));
+		
+		return "utente/show";
 	}
 	
 }

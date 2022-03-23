@@ -73,6 +73,12 @@ public class UtenteServiceImpl implements UtenteService {
 		return repository.findById(id).orElse(null);
 	}
 	
+	@Override
+	@Transactional(readOnly = true)
+	public Utente caricaSingoloUtenteConRuoli(Long id) {
+		return repository.findByIdConRuoli(id).orElse(null);
+	}
+	
 	
 	@Override
 	@Transactional(readOnly = true)
