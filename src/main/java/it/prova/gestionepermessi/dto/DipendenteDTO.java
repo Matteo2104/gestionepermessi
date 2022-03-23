@@ -148,10 +148,13 @@ public class DipendenteDTO {
 				dipendenteModel.getDataNascita(), dipendenteModel.getDataAssunzione(), dipendenteModel.getDataDimissioni(), 
 				dipendenteModel.getSesso());
 
+		
+		
 		if (!dipendenteModel.getRichiestePermesso().isEmpty())
 			result.richiestePermessoId = dipendenteModel.getRichiestePermesso().stream().map(r -> r.getId()).collect(Collectors.toList())
 					.toArray(new Long[] {});
 
+		
 		return result;
 	}
 	

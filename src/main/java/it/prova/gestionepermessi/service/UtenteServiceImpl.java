@@ -18,8 +18,10 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import it.prova.gestionepermessi.model.Dipendente;
 import it.prova.gestionepermessi.model.StatoUtente;
 import it.prova.gestionepermessi.model.Utente;
+import it.prova.gestionepermessi.repository.DipendenteRepository;
 import it.prova.gestionepermessi.repository.UtenteRepository;
 
 
@@ -27,6 +29,9 @@ import it.prova.gestionepermessi.repository.UtenteRepository;
 public class UtenteServiceImpl implements UtenteService {
 	@Autowired
 	private UtenteRepository repository;
+	
+	@Autowired
+	private DipendenteRepository dipendenteRepository;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
@@ -48,13 +53,23 @@ public class UtenteServiceImpl implements UtenteService {
 	
 	@Override
 	@Transactional
-	public void inserisciNuovo(Utente utenteInstance) {
-		utenteInstance.setStato(StatoUtente.CREATO);
-		utenteInstance.setPassword(passwordEncoder.encode(defaultPassword));
-		utenteInstance.setDateCreated(new Date());
-		utenteInstance.setUsername(utenteInstance.getNome().substring(0, 1) + "." + utenteInstance.getCognome());
+	public void inserisciNuovo(Utente utente) {
+		Dipendente dipendente = new Dipendente(utente.getNome(), utente.getCognome());
 		
-		repository.save(utenteInstance);
+		utente.setStato(StatoUtente.CREATO);
+		//System.out.println(defaultPassword);
+		utente.setPassword(passwordEncoder.encode("prova"));
+		utente.setDateCreated(new Date());
+		utente.setUsername(utente.getNome().substring(0, 1) + "." + utente.getCognome());
+		
+		dipendente.setEmail(utente.getUsername() + "@azienda.it");
+		
+		utente.setDipendente(dipendente);
+		dipendente.setUtente(utente);
+		
+		dipendenteRepository.save(dipendente);
+		repository.save(utente);
+		
 	}
 	
 	@Override

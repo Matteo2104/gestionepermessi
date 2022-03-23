@@ -16,6 +16,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -48,6 +49,19 @@ public class Utente {
 	@Column(name = "ruoli")
 	private Set<Ruolo> ruoli = new HashSet<>();
 	
+	@OneToOne(fetch = FetchType.LAZY, mappedBy="utente")
+    //@JoinColumn(name = "dipendente_id", nullable = false, unique=true)
+	private Dipendente dipendente;
+
+	
+	public Dipendente getDipendente() {
+		return dipendente;
+	}
+
+	public void setDipendente(Dipendente dipendente) {
+		this.dipendente = dipendente;
+	}
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "utenteInserimento")
 	private Set<Messaggio> messaggi = new HashSet<>();
 
@@ -63,6 +77,12 @@ public class Utente {
 	public Utente(String username, String password, String nome, String cognome, Date dateCreated) {
 		this.username = username;
 		this.password = password;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.dateCreated = dateCreated;
+	}
+	
+	public Utente(String nome, String cognome, Date dateCreated) {
 		this.nome = nome;
 		this.cognome = cognome;
 		this.dateCreated = dateCreated;

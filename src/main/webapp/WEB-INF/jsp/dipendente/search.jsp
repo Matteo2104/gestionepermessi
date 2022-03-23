@@ -77,7 +77,7 @@
 							</div>
 							
 							<div class="col-md-3">
-								<label for="sesso" class="form-label">Stato</label>
+								<label for="sesso" class="form-label">Sesso</label>
 								    <select class="form-select " id="sesso" name="sesso" >
 								    	<option value="" selected> - Selezionare - </option>
 								      	<option value="MASCHIO" >Maschio</option>
