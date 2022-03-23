@@ -17,4 +17,7 @@ public interface UtenteRepository extends CrudRepository<Utente, Long>, PagingAn
 	
 	@Query("from Utente u left join fetch u.ruoli where u.id = ?1")
 	Optional<Utente> findByIdConRuoli(Long id);
+	
+	@Query("from Utente u left join fetch u.dipendente where u.id = ?1")
+	Optional<Utente> findByIdConDipendenti(Long id);
 }

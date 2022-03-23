@@ -75,13 +75,19 @@ public class UtenteServiceImpl implements UtenteService {
 	@Override
 	@Transactional
 	public void aggiorna(Utente utenteInstance) {
-		Utente utenteReloaded = repository.findById(utenteInstance.getId()).orElse(null);
+		Utente utenteReloaded = repository.findByIdConDipendenti(utenteInstance.getId()).orElse(null);
 		if(utenteReloaded == null)
 			throw new RuntimeException("Elemento non trovato");
 		
 		utenteReloaded.setNome(utenteInstance.getNome());
 		utenteReloaded.setCognome(utenteInstance.getCognome());
 		utenteReloaded.setUsername(utenteInstance.getNome().substring(0, 1) + "." + utenteInstance.getCognome());
+		
+		// modifico i dettagli relativi al dipendente associato
+		utenteReloaded.getDipendente().setNome(utenteInstance.getNome());
+		utenteReloaded.getDipendente().setCognome(utenteInstance.getCognome());
+		utenteReloaded.getDipendente().setEmail(utenteReloaded.getUsername() + "@azienda.it");
+
 		utenteReloaded.setRuoli(utenteInstance.getRuoli());
 		repository.save(utenteReloaded);
 	}
