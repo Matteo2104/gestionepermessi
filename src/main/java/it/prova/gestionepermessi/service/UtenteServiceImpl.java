@@ -8,6 +8,7 @@ import javax.persistence.criteria.Predicate;
 
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +31,9 @@ public class UtenteServiceImpl implements UtenteService {
 	@Autowired
 	private PasswordEncoder passwordEncoder;
 	
+	@Value("${defaultPassword}")
+	private String defaultPassword;
+	
 	@Override
 	@Transactional(readOnly = true)
 	public List<Utente> listAllUtenti() {
@@ -46,9 +50,10 @@ public class UtenteServiceImpl implements UtenteService {
 	@Transactional
 	public void inserisciNuovo(Utente utenteInstance) {
 		utenteInstance.setStato(StatoUtente.CREATO);
-		utenteInstance.setPassword(passwordEncoder.encode(utenteInstance.getPassword())); 
+		utenteInstance.setPassword(passwordEncoder.encode(defaultPassword));
 		utenteInstance.setDateCreated(new Date());
 		utenteInstance.setUsername(utenteInstance.getNome().substring(0, 1) + "." + utenteInstance.getCognome());
+		
 		repository.save(utenteInstance);
 	}
 	

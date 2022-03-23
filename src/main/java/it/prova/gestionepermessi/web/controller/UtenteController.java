@@ -110,6 +110,8 @@ public class UtenteController {
 		}
 		
 		utenteService.inserisciNuovo(utenteDTO.buildUtenteModel(true));
+		
+		
 
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 		return "redirect:/utente";
