@@ -24,50 +24,85 @@
 			    <div class='card-body'>
 			    	<dl class="row">
 					  <dt class="col-sm-3 text-right">Id:</dt>
-					  <dd class="col-sm-9">${show_utente_attr.id}</dd>
+					  <dd class="col-sm-9">${show_dipendente_attr.id}</dd>
 			    	</dl>
 			    	
 			    	<dl class="row">
 					  <dt class="col-sm-3 text-right">Nome:</dt>
-					  <dd class="col-sm-9">${show_utente_attr.nome}</dd>
+					  <dd class="col-sm-9">${show_dipendente_attr.nome}</dd>
 			    	</dl>
 			    	
 			    	<dl class="row">
 					  <dt class="col-sm-3 text-right">Cognome:</dt>
-					  <dd class="col-sm-9">${show_utente_attr.cognome}</dd>
+					  <dd class="col-sm-9">${show_dipendente_attr.cognome}</dd>
 			    	</dl>
 			    	
 			    	<dl class="row">
-					  <dt class="col-sm-3 text-right">Username:</dt>
-					  <dd class="col-sm-9">${show_utente_attr.username}</dd>
+					  <dt class="col-sm-3 text-right">Codice Fiscale:</dt>
+					  <dd class="col-sm-9">${show_dipendente_attr.codFis}</dd>
 			    	</dl>
 			    	
 			    	<dl class="row">
-					  <dt class="col-sm-3 text-right">Data Creazione:</dt>
-					  <dd class="col-sm-9"><fmt:formatDate type = "date" value = "${show_utente_attr.dateCreated}" /></dd>
+					  <dt class="col-sm-3 text-right">Email:</dt>
+					  <dd class="col-sm-9">${show_dipendente_attr.email}</dd>
 			    	</dl>
 			    	
 			    	<dl class="row">
-					  <dt class="col-sm-3 text-right">Stato:</dt>
-					  <dd class="col-sm-9">${show_utente_attr.stato}</dd>
+					  <dt class="col-sm-3 text-right">Data Nascita:</dt>
+					  <dd class="col-sm-9"><fmt:formatDate type = "date" value = "${show_dipendente_attr.dataNascita}" /></dd>
 			    	</dl>
 			    	
-			    	<!-- info Ruoli -->
+			    	<dl class="row">
+					  <dt class="col-sm-3 text-right">Data Assunzione:</dt>
+					  <dd class="col-sm-9"><fmt:formatDate type = "date" value = "${show_dipendente_attr.dataAssunzione}" /></dd>
+			    	</dl>
+			    	
+			    	<dl class="row">
+					  <dt class="col-sm-3 text-right">Data Dimissioni:</dt>
+					  <dd class="col-sm-9"><fmt:formatDate type = "date" value = "${show_dipendente_attr.dataDimissioni}" /></dd>
+			    	</dl>
+			    	
+			    	<dl class="row">
+					  <dt class="col-sm-3 text-right">Sesso:</dt>
+					  <dd class="col-sm-9">${show_dipendente_attr.sesso}</dd>
+			    	</dl>
+			    	
+			    	
+			    	<!-- info Richieste Permesso -->
 			    	<p>
 					  <a class="btn btn-primary btn-sm" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-					    Info Ruoli
+					    Richieste Permesso
 					  </a>
 					</p>
 					<div class="collapse" id="collapseExample">
 					  <div class="card card-body">
-					  <c:forEach items="${show_ruoli_attr}" var="ruoloItem">
+					  <c:forEach items="${show_richieste_attr}" var="richiestaItem">
 						  	<dl class="row">
-							  <dt class="col-sm-3 text-right">Descrizione:</dt>
-							  <dd class="col-sm-9">${ruoloItem.descrizione}</dd>
+							  <dt class="col-sm-3 text-right">Tipologia Permesso:</dt>
+							  <dd class="col-sm-9">${richiestaItem.tipoPermesso}</dd>
 						   	</dl>
 						   	<dl class="row">
-							  <dt class="col-sm-3 text-right">Codice:</dt>
-							  <dd class="col-sm-9">${ruoloItem.codice}</dd>
+					  			<dt class="col-sm-3 text-right">Data Inizio:</dt>
+					  			<dd class="col-sm-9"><fmt:formatDate type = "date" value = "${richiestaItem.dataInizio}" /></dd>
+			    				</dl>
+			    			<dl class="row">
+					  			<dt class="col-sm-3 text-right">Data Fine:</dt>
+					  			<dd class="col-sm-9"><fmt:formatDate type = "date" value = "${richiestaItem.dataFine}" /></dd>
+			    			</dl>
+			    			
+						   	<dl class="row">
+							  <dt class="col-sm-3 text-right">Approvato:</dt>
+							  <dd class="col-sm-9">${richiestaItem.approvato?'Si':'No'}</dd>
+						   	</dl>
+						   	
+						   	<dl class="row">
+							  <dt class="col-sm-3 text-right">Codice Certificato:</dt>
+							  <dd class="col-sm-9">${richiestaItem.codiceCertificato}</dd>
+						   	</dl>
+						   	
+						   	<dl class="row">
+							  <dt class="col-sm-3 text-right">Note:</dt>
+							  <dd class="col-sm-9">${richiestaItem.note}</dd>
 						   	</dl>
 					   </c:forEach>
 					  </div>
@@ -78,7 +113,7 @@
 			    </div>
 			    
 			    <div class='card-footer'>
-			        <a href="${pageContext.request.contextPath }/utente" class='btn btn-outline-secondary' style='width:80px'>
+			        <a href="${pageContext.request.contextPath }/dipendente" class='btn btn-outline-secondary' style='width:80px'>
 			            <i class='fa fa-chevron-left'></i> Back
 			        </a>
 			    </div>

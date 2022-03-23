@@ -7,13 +7,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import it.prova.gestionepermessi.dto.DipendenteDTO;
-import it.prova.gestionepermessi.dto.RuoloDTO;
-import it.prova.gestionepermessi.dto.UtenteDTO;
+import it.prova.gestionepermessi.dto.RichiestaPermessoDTO;
+import it.prova.gestionepermessi.model.Dipendente;
 import it.prova.gestionepermessi.model.Utente;
 import it.prova.gestionepermessi.service.DipendenteService;
 import it.prova.gestionepermessi.service.RuoloService;
@@ -43,9 +44,9 @@ public class DipendenteController {
 		}
 		*/
 		
-		List<Utente> utenti = utenteService.listAllUtenti();
-		mv.addObject("utente_list_attribute", utenti);
-		mv.setViewName("utente/list");
+		List<Dipendente> dipendenti = dipendenteService.listAllDipendenti();
+		mv.addObject("dipendente_list_attribute", dipendenti);
+		mv.setViewName("dipendente/list");
 		return mv;
 	}
 	
@@ -61,16 +62,22 @@ public class DipendenteController {
 		List<DipendenteDTO> dipendentiDTOlist = DipendenteDTO.createDipendenteDTOListFromModelList(dipendenteService.findByExample(dipendenteExample.buildDipendenteModel(false), null, null, null).toList());
 		
 		
-		/*
-		Utente utenteInSessione = utenteService.findByUsername(auth.getName());
-
-		for (Ruolo ruolo : utenteInSessione.getRuoli()) {
-			if (ruolo.getCodice().equals(Ruolo.ROLE_ADMIN_USER)) 
-				model.addAttribute("userAdmin", true);
-		}
-		*/
-		
 		model.addAttribute("dipendente_list_attribute", dipendentiDTOlist);
 		return "dipendente/list";
 	}
+	
+	// CICLO VISUALIZZAZIONE
+	@GetMapping("/show/{idDipendente}")
+	public String show(@PathVariable(required = true) Long idDipendente, Model model) {
+		Dipendente dipendente = dipendenteService.caricaSingoloDipendenteConRichiestePermesso(idDipendente);
+		DipendenteDTO dipendenteDTO = DipendenteDTO.buildDipendenteDTOFromModel(dipendente);
+		
+		//System.out.println(utente);
+		
+		model.addAttribute("show_dipendente_attr", dipendenteDTO);
+		model.addAttribute("show_richieste_attr", RichiestaPermessoDTO.createRichiestaPermessoDTOListFromModelSet(dipendente.getRichiestePermesso()));
+		
+		return "dipendente/show";
+	}
+	
 }

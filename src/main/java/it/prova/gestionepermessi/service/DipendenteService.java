@@ -8,8 +8,11 @@ import it.prova.gestionepermessi.model.Dipendente;
 
 public interface DipendenteService {
 
-	public List<Dipendente> listAllUtenti();
+	public List<Dipendente> listAllDipendenti();
 
 	public Page<Dipendente> findByExample(Dipendente example, Integer pageNo, Integer pageSize, String sortBy);
+
+	public Dipendente caricaSingoloDipendenteConRichiestePermesso(Long id);
+
 
 }

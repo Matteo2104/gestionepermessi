@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import it.prova.gestionepermessi.model.Dipendente;
-import it.prova.gestionepermessi.model.Utente;
 import it.prova.gestionepermessi.repository.DipendenteRepository;
 
 @Service
@@ -27,8 +26,14 @@ public class DipendenteServiceImpl implements DipendenteService {
 	
 	@Override
 	@Transactional(readOnly = true)
-	public List<Dipendente> listAllUtenti() {
+	public List<Dipendente> listAllDipendenti() {
 		return (List<Dipendente>) repository.findAll();
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Dipendente caricaSingoloDipendenteConRichiestePermesso(Long id) {
+		return repository.findByIdConRichieste(id).orElse(null);
 	}
 	
 	@Override
