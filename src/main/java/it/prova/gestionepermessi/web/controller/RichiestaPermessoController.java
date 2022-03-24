@@ -8,19 +8,25 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.prova.gestionepermessi.dto.RichiestaPermessoDTO;
+import it.prova.gestionepermessi.dto.RuoloDTO;
 import it.prova.gestionepermessi.dto.DipendenteDTO;
 import it.prova.gestionepermessi.model.RichiestaPermesso;
 import it.prova.gestionepermessi.service.DipendenteService;
 import it.prova.gestionepermessi.service.RichiestaPermessoService;
 import it.prova.gestionepermessi.service.RuoloService;
 import it.prova.gestionepermessi.service.UtenteService;
+import it.prova.gestionepermessi.validation.ValidationWithPassword;
 
 @Controller
 @RequestMapping(value = "/permesso")
@@ -118,5 +124,36 @@ public class RichiestaPermessoController {
 		model.addAttribute("permesso_list_attribute", richieste);
 		return "permesso/list";
 	}
+	
+	// CICLO INSERIMENTO 
+	@GetMapping("/insert")
+	public String create(Model model) {
+		model.addAttribute("insert_richiesta_attr", new RichiestaPermessoDTO());
+		return "permesso/insert";
+	}
+	@PostMapping("/save")
+	public String save(@ModelAttribute("insert_dipendente_attr") RichiestaPermessoDTO richiestaPermessoDTO,
+			BindingResult result, Model model, RedirectAttributes redirectAttrs) {
+
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Long idUtenteInSessione = utenteService.findByUsername(auth.getName()).getId();
+
+		// System.out.println(utenteDTO);
+		/*
+		 * if (!result.hasFieldErrors("password") &&
+		 * !utenteDTO.getPassword().equals(utenteDTO.getConfermaPassword()))
+		 * result.rejectValue("confermaPassword", "password.diverse");
+		 */
+
+		if (result.hasErrors()) {
+			return "permesso/insert";
+		}
+
+		richiestaPermessoService.inserisciNuovo(idUtenteInSessione, richiestaPermessoDTO.buildRichiestaPermessoModel(false));
+
+		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
+		return "redirect:/permesso";
+	}
+	
 	
 }

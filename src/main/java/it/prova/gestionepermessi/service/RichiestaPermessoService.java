@@ -17,4 +17,7 @@ public interface RichiestaPermessoService {
 	public Page<RichiestaPermesso> findByExamplePersonale(Long id, RichiestaPermesso example, Integer pageNo, Integer pageSize,
 			String sortBy);
 
+
+	public void inserisciNuovo(Long id, RichiestaPermesso richiestaPermesso);
+
 }

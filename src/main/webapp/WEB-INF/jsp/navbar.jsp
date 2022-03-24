@@ -22,6 +22,10 @@
               	<li><a class="dropdown-item" href="${pageContext.request.contextPath}/permesso/search">Ricerca Permessi</a></li>
               	<li><a class="dropdown-item" href="${pageContext.request.contextPath}/messaggio/search">Gestione Messaggi</a></li>
               </sec:authorize>
+              <sec:authorize access="hasRole('DIPENDENTE_USER')">
+              	 <li><a class="dropdown-item" href="${pageContext.request.contextPath}/permesso/searchPersonale">Ricerca Permessi</a></li>
+              	 <li><a class="dropdown-item" href="${pageContext.request.contextPath}/permesso/insert">Richiedi Permesso</a></li>
+              </sec:authorize>
             </ul> 
           </li>
           

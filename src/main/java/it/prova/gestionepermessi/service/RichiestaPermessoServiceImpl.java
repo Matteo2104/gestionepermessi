@@ -1,6 +1,7 @@
 package it.prova.gestionepermessi.service;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.criteria.Predicate;
@@ -16,13 +17,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import it.prova.gestionepermessi.model.Dipendente;
+import it.prova.gestionepermessi.model.Messaggio;
 import it.prova.gestionepermessi.model.RichiestaPermesso;
+import it.prova.gestionepermessi.repository.DipendenteRepository;
+import it.prova.gestionepermessi.repository.MessaggioRepository;
 import it.prova.gestionepermessi.repository.RichiestaPermessoRepository;
 
 @Service
 public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 	@Autowired
 	private RichiestaPermessoRepository repository;
+	@Autowired
+	private DipendenteRepository dipendenteRepository;
+	@Autowired
+	private MessaggioRepository messaggioRepository;
 	
 	@Override
 	@Transactional(readOnly = true)
@@ -34,6 +42,27 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 	@Transactional(readOnly = true)
 	public List<RichiestaPermesso> listAllRichieste() {
 		return (List<RichiestaPermesso>) repository.findAll();
+	}
+	
+	@Override
+	@Transactional
+	public void inserisciNuovo(Long id, RichiestaPermesso richiestaPermesso) {
+		Dipendente dipendente = dipendenteRepository.findById(id).orElse(null);
+		
+		Messaggio messaggio = new Messaggio();
+		
+		// riempio l'istanza di messaggio con le varie informazioni
+		messaggio.setOggetto("Richiesta di Permesso da parte di " + dipendente.getNome() + " " + dipendente.getCognome());
+		messaggio.setTesto("Con la presente, si richiede un permesso di tipo + " + richiestaPermesso.getTipoPermesso() + " che va dal " + richiestaPermesso.getDataInizio() + " al " + richiestaPermesso.getDataFine());
+		messaggio.setLetto(false);
+		
+		richiestaPermesso.setDipendente(dipendente);
+		dipendente.getRichiestePermesso().add(richiestaPermesso);
+		repository.save(richiestaPermesso);
+		
+		messaggio.setRichiestaPermesso(richiestaPermesso);
+		messaggioRepository.save(messaggio);
+	
 	}
 	
 	@Override
@@ -135,4 +164,5 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 
 		return repository.findAll(specificationCriteria, paging);
 	}
+
 }

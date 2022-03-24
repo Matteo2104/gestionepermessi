@@ -54,7 +54,7 @@
 				      <div class="container-fluid py-5">
 				        <h1 class="display-5 fw-bold">Benvenuto alla Gestione Permessi</h1>
 				        <p class="col-md-8 fs-4">Qui puoi gestire le richieste di permessi lavorativi </p>
-				        <sec:authorize access="hasRole({'ADMIN_USER', 'BO_USER'})">
+				        <sec:authorize access="hasAnyRole({'ADMIN_USER', 'BO_USER'})">
 				        	<a class="btn btn-primary btn-lg" href="${pageContext.request.contextPath}/dipendente/search">Gestione Dipendenti</a>
 				      	</sec:authorize>
 				      	<sec:authorize access="hasRole('DIPENDENTE_USER')">

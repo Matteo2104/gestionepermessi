@@ -14,7 +14,7 @@
 		    }
 		</style>
 	   
-	   <title>Inserisci Nuovo Elemento</title>
+	   <title>Richiesta Permesso</title>
 	 </head>
 	   <body class="d-flex flex-column h-100">
 	   
@@ -27,7 +27,7 @@
 			  <div class="container">
 			  
 			  		<%-- se l'attributo in request ha errori --%>
-					<spring:hasBindErrors  name="insert_regista_attr">
+					<spring:hasBindErrors  name="insert_richiesta_attr">
 						<%-- alert errori --%>
 						<div class="alert alert-danger " role="alert">
 							Attenzione!! Sono presenti errori di validazione
@@ -41,62 +41,78 @@
 			  
 			  <div class='card'>
 				    <div class='card-header'>
-				        <h5>Inserisci nuovo elemento</h5> 
+				        <h5>Richiesta Permesso</h5> 
 				    </div>
 				    <div class='card-body'>
 		
 							<h6 class="card-title">I campi con <span class="text-danger">*</span> sono obbligatori</h6>
 		
 		
-							<form:form modelAttribute="insert_regista_attr" method="post" action="save" novalidate="novalidate" class="row g-3">
+							<form:form modelAttribute="insert_richiesta_attr" method="post" action="save" novalidate="novalidate" class="row g-3">
 					
-							
-								<div class="col-md-6">
-									<label for="nome" class="form-label">Nome <span class="text-danger">*</span></label>
-									<spring:bind path="nome">
-									<input type="text" name="nome" id="nome" class="form-control ${status.error ? 'is-invalid' : ''}" placeholder="Inserire il nome" value="${insert_regista_attr.nome }" required>
-									</spring:bind>
-									<form:errors  path="nome" cssClass="error_field" />
-								</div>
-								
-								<div class="col-md-6">
-									<label for="cognome" class="form-label">Cognome <span class="text-danger">*</span></label>
-									<spring:bind path="cognome">
-									<input type="text" name="cognome" id="cognome" class="form-control ${status.error ? 'is-invalid' : ''}" placeholder="Inserire il cognome" value="${insert_regista_attr.cognome }" required>
-									</spring:bind>
-									<form:errors  path="cognome" cssClass="error_field" />
-								</div>
-							
-								<div class="col-md-6">
-									<label for="nickName" class="form-label">Nickname <span class="text-danger">*</span></label>
-									<spring:bind path="nickName">
-									<input type="text" class="form-control ${status.error ? 'is-invalid' : ''}" name="nickName" id="nickName" placeholder="Inserire il nickname" value="${insert_regista_attr.nickName }" required>
-									</spring:bind>
-									<form:errors  path="nickName" cssClass="error_field" />
-								</div>
-								
-								<fmt:formatDate pattern='yyyy-MM-dd' var="parsedDate" type='date' value='${insert_regista_attr.dataDiNascita}' />
 								<div class="col-md-3">
-									<label for="dataDiNascita" class="form-label">Data di Nascita <span class="text-danger">*</span></label>
-                        			<spring:bind path="dataDiNascita">
-	                        		<input class="form-control ${status.error ? 'is-invalid' : ''}" id="dataDiNascita" type="date" placeholder="dd/MM/yy"
-	                            		title="formato : gg/mm/aaaa"  name="dataDiNascita" required 
+									<label for="tipoPermesso" class="form-label">Tipologia Permesso </label>
+								    <select class="form-select" id="tipoPermesso" name="tipoPermesso" >
+								    	<option value="" selected> - Selezionare - </option>
+								      	<option value="FERIE" >Ferie</option>
+								      	<option value="MALATTIA" >Malattia</option>
+								    </select>
+								</div>
+								
+								<div class="col-md-6">
+									<label for="codiceCertificato" class="form-label">Codice Certificato </label>
+									<spring:bind path="codiceCertificato">
+										<input type="text" name="codiceCertificato" id="codiceCertificato" class="form-control" placeholder="Inserire codice certificato" value="${insert_richiesta_attr.codiceCertificato }" required >
+									</spring:bind>
+									<form:errors  path="codiceCertificato" cssClass="error_field" />
+								</div>
+								
+								<fmt:formatDate pattern='yyyy-MM-dd' var="parsedDate" type='date' value='${insert_richiesta_attr.dataInizio}' />
+								<div class="col-md-3">
+									<label for="dataInizio" class="form-label">Data di Inizio <span class="text-danger">*</span></label>
+                        			<spring:bind path="dataInizio">
+	                        		<input class="form-control ${status.error ? 'is-invalid' : ''}" id="dataInizio" type="date" placeholder="dd/MM/yy"
+	                            		title="formato : gg/mm/aaaa"  name="dataInizio" required 
 	                            		value="${parsedDate}" >
 		                            </spring:bind>
-	                            	<form:errors  path="dataDiNascita" cssClass="error_field" />
+	                            	<form:errors  path="dataInizio" cssClass="error_field" />
 								</div>
 								
+								<fmt:formatDate pattern='yyyy-MM-dd' var="parsedDate" type='date' value='${insert_richiesta_attr.dataFine}' />
 								<div class="col-md-3">
-									<label for="sesso" class="form-label">Sesso <span class="text-danger">*</span></label>
-								    <spring:bind path="sesso">
-									    <select class="form-select ${status.error ? 'is-invalid' : ''}" id="sesso" name="sesso" required>
-									    	<option value="" selected> - Selezionare - </option>
-									      	<option value="MASCHIO" ${insert_regista_attr.sesso == 'MASCHIO'?'selected':''} >M</option>
-									      	<option value="FEMMINA" ${insert_regista_attr.sesso == 'FEMMINA'?'selected':''} >F</option>
-									    </select>
-								    </spring:bind>
-								    <form:errors  path="sesso" cssClass="error_field" />
+									<label for="dataFine" class="form-label">Data Fine <span class="text-danger">*</span></label>
+                        			<spring:bind path="dataFine">
+	                        		<input class="form-control ${status.error ? 'is-invalid' : ''}" id="dataFine" type="date" placeholder="dd/MM/yy"
+	                            		title="formato : gg/mm/aaaa"  name="dataFine" required 
+	                            		value="${parsedDate}" >
+		                            </spring:bind>
+	                            	<form:errors  path="dataFine" cssClass="error_field" />
 								</div>
+								
+								
+								
+								<div class="col-md-6">
+									<label for="note" class="form-label">Note </label>
+									<spring:bind path="note">
+										<input type="text" name="note" id="note" class="form-control" placeholder="Inserire note" value="${insert_richiesta_attr.codiceCertificato }"  >
+									</spring:bind>
+									<form:errors  path="note" cssClass="error_field" />
+								</div>
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
+								
 								
 								
 							<div class="col-12">

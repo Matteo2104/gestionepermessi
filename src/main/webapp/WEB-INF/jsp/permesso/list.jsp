@@ -53,6 +53,7 @@
 				            
 				        
 				        <sec:authorize access="hasRole('DIPENDENTE_USER')">
+				        	<a class="btn btn-primary " href="${pageContext.request.contextPath}/permesso/insert">Richiedi Permesso</a>
 				            <a href="${pageContext.request.contextPath }/permesso/searchPersonale" class='btn btn-outline-secondary' >
 				            	<i class='fa fa-chevron-left'></i> Torna alla Ricerca
 				           	</a>
