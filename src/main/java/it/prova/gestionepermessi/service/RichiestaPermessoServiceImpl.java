@@ -15,6 +15,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import it.prova.gestionepermessi.model.Dipendente;
 import it.prova.gestionepermessi.model.RichiestaPermesso;
 import it.prova.gestionepermessi.repository.RichiestaPermessoRepository;
 
@@ -22,6 +23,12 @@ import it.prova.gestionepermessi.repository.RichiestaPermessoRepository;
 public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 	@Autowired
 	private RichiestaPermessoRepository repository;
+	
+	@Override
+	@Transactional(readOnly = true)
+	public RichiestaPermesso caricaSingolaRichiestaConDipendente(Long id) {
+		return repository.findByIdConDipendente(id).orElse(null);
+	}
 	
 	@Override
 	@Transactional(readOnly = true)

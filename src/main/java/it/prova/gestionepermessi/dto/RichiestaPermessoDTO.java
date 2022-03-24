@@ -119,6 +119,9 @@ public class RichiestaPermessoDTO {
 		RichiestaPermessoDTO result = new RichiestaPermessoDTO(richiestaPermessoModel.getId(), richiestaPermessoModel.getTipoPermesso(),
 				richiestaPermessoModel.getDataInizio(), richiestaPermessoModel.getDataFine(), richiestaPermessoModel.getApprovato(), 
 				richiestaPermessoModel.getCodiceCertificato(), richiestaPermessoModel.getNote());
+		
+		result.setDipendente(DipendenteDTO.buildDipendenteDTOFromModel(richiestaPermessoModel.getDipendente()));
+		
 		/*
 		if (!dipendenteModel.getRichiestePermesso().isEmpty())
 			result.richiestePermessoId = dipendenteModel.getRichiestePermesso().stream().map(r -> r.getId()).collect(Collectors.toList())

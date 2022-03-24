@@ -7,6 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -59,18 +60,27 @@ public class RichiestaPermessoController {
 		List<RichiestaPermesso> richieste = richiestaPermessoService.findByExample(permessoExample.buildRichiestaPermessoModel(true), null, null, null)
 				.toList();
 
-		
-		
-		/*
-		 * Utente utenteInSessione = utenteService.findByUsername(auth.getName());
-		 * 
-		 * for (Ruolo ruolo : utenteInSessione.getRuoli()) { if
-		 * (ruolo.getCodice().equals(Ruolo.ROLE_ADMIN_USER))
-		 * model.addAttribute("userAdmin", true); }
-		 */
-
 		model.addAttribute("permesso_list_attribute", richieste);
 		return "permesso/list";
+	}
+	
+	// CICLO VISUALIZZAZIONE
+	@GetMapping("/show/{idRichiestaPermesso}")
+	public String show(@PathVariable(required = true) Long idRichiestaPermesso, Model model) {
+		RichiestaPermesso richiesta = richiestaPermessoService.caricaSingolaRichiestaConDipendente(idRichiestaPermesso);
+		RichiestaPermessoDTO richiestaDTO = RichiestaPermessoDTO.buildRichiestaPermessoDTOFromModel(richiesta);
+		
+		/*
+		Utente utente = utenteService.caricaSingoloUtenteConRuoli(idRichiestaPermesso);
+		UtenteDTO utenteDTO = UtenteDTO.buildUtenteDTOFromModel(utente);
+		*/
+		
+		//System.out.println(utente);
+		
+		model.addAttribute("show_richiesta_attr", richiestaDTO);
+		//model.addAttribute("show_ruoli_attr", RuoloDTO.createRuoloDTOListFromModelSet(utente.getRuoli()));
+		
+		return "permesso/show";
 	}
 	
 }

@@ -66,7 +66,7 @@
 											<td><fmt:formatDate type = "date" value = "${permessoItem.dataInizio }" /></td>
 											<td><fmt:formatDate type = "date" value = "${permessoItem.dataFine }" /></td>
 											<td>
-												<a class="btn  btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/permesso/show/${registaItem.id }">Visualizza</a>
+												<a class="btn  btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/permesso/show/${permessoItem.id}">Visualizza</a>
 												
 												<!-- non è possibile modificare o eliminare i permessi 
 													<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="${pageContext.request.contextPath}/regista/edit/${registaItem.id }">Edit</a>
