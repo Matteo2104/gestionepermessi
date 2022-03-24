@@ -100,6 +100,9 @@ public class RichiestaPermessoDTO {
 	public void setDipendente(DipendenteDTO dipendente) {
 		this.dipendente = dipendente;
 	}
+	
+	
+	
 	public RichiestaPermesso buildRichiestaPermessoModel(boolean includeIdRoles) {
 		RichiestaPermesso result = new RichiestaPermesso(this.id, this.tipoPermesso, this.dataInizio, this.dataFine, this.approvato, this.codiceCertificato, this.note);
 		

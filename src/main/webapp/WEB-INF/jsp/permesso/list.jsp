@@ -1,6 +1,8 @@
 <%@page pageEncoding="UTF-8" contentType="text/html; charset=UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <!doctype html>
 <html lang="it" class="h-100" >
 	 <head>
@@ -42,9 +44,19 @@
 				    </div>
 				    <div class='card-body'>
 				    	
-				    	<a href="${pageContext.request.contextPath }/permesso/search" class='btn btn-outline-secondary' >
-				            <i class='fa fa-chevron-left'></i> Torna alla Ricerca
-				        </a>
+				    	
+				    	<sec:authorize access="hasRole({'ADMIN_USER', 'BO_USER'})">
+				    		<a href="${pageContext.request.contextPath }/permesso/search" class='btn btn-outline-secondary' >
+				            	<i class='fa fa-chevron-left'></i> Torna alla Ricerca
+				           	</a>
+				        </sec:authorize>
+				            
+				        
+				        <sec:authorize access="hasRole('DIPENDENTE_USER')">
+				            <a href="${pageContext.request.contextPath }/permesso/searchPersonale" class='btn btn-outline-secondary' >
+				            	<i class='fa fa-chevron-left'></i> Torna alla Ricerca
+				           	</a>
+				        </sec:authorize>
 				    
 				        <div class='table-responsive'>
 				            <table class='table table-striped ' >

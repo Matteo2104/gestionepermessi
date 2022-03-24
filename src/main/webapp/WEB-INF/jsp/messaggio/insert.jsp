@@ -12,7 +12,7 @@
 		    }
 		</style>
 	   
-	   <title>Inserisci Nuovo Elemento</title>
+	   <title>Inserisci Nuovo Utente</title>
 	 </head>
 	   <body class="d-flex flex-column h-100">
 	   
@@ -39,7 +39,7 @@
 			  
 			  <div class='card'>
 				    <div class='card-header'>
-				        <h5>Inserisci nuovo elemento</h5> 
+				        <h5>Inserisci nuovo utente</h5> 
 				    </div>
 				    <div class='card-body'>
 		
@@ -64,29 +64,9 @@
 									</spring:bind>
 									<form:errors  path="cognome" cssClass="error_field" />
 								</div>
-								<div class="col-md-6">
-									<label for="username" class="form-label">Username <span class="text-danger">*</span></label>
-									<spring:bind path="username">
-										<input type="text" class="form-control ${status.error ? 'is-invalid' : ''}" name="username" id="username" placeholder="Inserire Username" value="${insert_utente_attr.username }" required>
-									</spring:bind>
-									<form:errors  path="username" cssClass="error_field" />
-								</div>
+							
 								 
-								<div class="col-md-3">
-									<label for="password" class="form-label">Password <span class="text-danger">*</span></label>
-									<spring:bind path="password">
-										<input type="password" class="form-control ${status.error ? 'is-invalid' : ''}" name="password" id="password" placeholder="Inserire Password"  required>
-									</spring:bind>
-									<form:errors  path="password" cssClass="error_field" />
-								</div>
 								
-								<div class="col-md-3">
-									<label for="confermaPassword" class="form-label">Conferma Password <span class="text-danger">*</span></label>
-									<spring:bind path="confermaPassword">
-										<input type="password" class="form-control ${status.error ? 'is-invalid' : ''}" name="confermaPassword" id="confermaPassword" placeholder="Confermare Password"  required>
-									</spring:bind>
-									<form:errors  path="confermaPassword" cssClass="error_field" />
-								</div>
 								
 								
 								<%--  checkbox ruoli 	--%>

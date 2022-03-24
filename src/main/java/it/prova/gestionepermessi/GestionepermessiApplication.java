@@ -67,6 +67,16 @@ public class GestionepermessiApplication implements CommandLineRunner {
 			utenteServiceInstance.changeUserAbilitation(classicUser.getId());
 		}
 		
+		// CREO UN UTENTE DIPENDENTE
+				if (utenteServiceInstance.findByUsername("v.tortosa") == null) {
+					Utente classicUser = new Utente("valeria", "tortosa", new Date());
+					classicUser.getRuoli()
+							.add(ruoloServiceInstance.cercaPerDescrizioneECodice("Dipendente User", "ROLE_DIPENDENTE_USER"));
+					utenteServiceInstance.inserisciNuovo(classicUser);
+					//l'inserimento avviene come created ma io voglio attivarlo
+					utenteServiceInstance.changeUserAbilitation(classicUser.getId());
+				}
+		
 		/*
 		if (utenteServiceInstance.findByUsername("user1") == null) {
 			Utente classicUser1 = new Utente("user1", "user1", "Antonioo", "Verdii", new Date());

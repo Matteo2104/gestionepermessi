@@ -32,6 +32,12 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 	
 	@Override
 	@Transactional(readOnly = true)
+	public List<RichiestaPermesso> listAllRichieste() {
+		return (List<RichiestaPermesso>) repository.findAll();
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
 	public Page<RichiestaPermesso> findByExample(RichiestaPermesso example, Integer pageNo, Integer pageSize, String sortBy) {
 		Specification<RichiestaPermesso> specificationCriteria = (root, query, cb) -> {
 
@@ -61,6 +67,58 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 			
 			if (example.getDipendente() != null && example.getDipendente().getId() != null) 
 				predicates.add(cb.equal(cb.upper(root.get("dipendente")), example.getDipendente().getId()));
+			
+		
+			
+			return cb.and(predicates.toArray(new Predicate[predicates.size()]));
+
+		};
+		
+		Pageable paging = null;
+		// se non passo parametri di paginazione non ne tengo conto
+		if (pageSize == null || pageSize < 10)
+			paging = Pageable.unpaged();
+		else
+			paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+
+		return repository.findAll(specificationCriteria, paging);
+	}
+	
+	
+	@Override
+	@Transactional(readOnly = true)
+	public Page<RichiestaPermesso> findByExamplePersonale(Long id, RichiestaPermesso example, Integer pageNo, Integer pageSize, String sortBy) {
+		Specification<RichiestaPermesso> specificationCriteria = (root, query, cb) -> {
+
+			List<Predicate> predicates = new ArrayList<Predicate>();
+			
+		
+
+			if (example.getTipoPermesso() != null)
+				predicates.add(cb.equal(cb.upper(root.get("tipoPermesso")), example.getTipoPermesso()));
+
+			if (example.getDataInizio() != null)
+				predicates.add(cb.greaterThanOrEqualTo(root.get("dataInizio"), example.getDataInizio()));
+			
+			if (example.getDataFine() != null)
+				predicates.add(cb.greaterThanOrEqualTo(root.get("dataFine"), example.getDataFine()));
+
+			if (example.getApprovato() != null)
+				predicates.add(cb.equal(cb.upper(root.get("approvato")), example.getApprovato()));
+			
+			if (StringUtils.isNotBlank(example.getCodiceCertificato()))
+				predicates.add(cb.like(root.get("codiceCertificato"), "%" + example.getCodiceCertificato() + "%"));
+			
+			if (StringUtils.isNotBlank(example.getNote()))
+				predicates.add(cb.like(root.get("note"), "%" + example.getNote() + "%"));
+
+			
+			
+			// filtro solo le richieste relative all'utente in sessione
+			
+			predicates.add(cb.equal(cb.upper(root.get("dipendente")), id));
+			
+			
 			
 		
 			

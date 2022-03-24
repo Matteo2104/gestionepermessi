@@ -28,8 +28,8 @@
 			        <h5>Lista dei risultati</h5> 
 			    </div>
 			    <div class='card-body'>
-			    	<a class="btn btn-primary " href="${pageContext.request.contextPath}/utente/insert">Add New</a>
-			    	<a href="${pageContext.request.contextPath}/utente/search" class='btn btn-outline-secondary' >
+			    	
+			    	<a href="${pageContext.request.contextPath}/messaggio/search" class='btn btn-outline-secondary' >
 				            <i class='fa fa-chevron-left'></i> Torna alla Ricerca
 				        </a>
 			    
@@ -37,28 +37,26 @@
 			            <table class='table table-striped ' >
 			                <thead>
 			                    <tr>
-			                        <th>Nome</th>
-			                        <th>Cognome</th>
-			                        <th>Username</th>
-			                        <th>Stato</th>
+			                        <th>Oggetto</th>
+			                        <th>Letto</th>
+			            
 			                        <th>Azioni</th>
 			                    </tr>
 			                </thead>
 			                <tbody>
-			                	<c:forEach items="${utente_list_attribute }" var="utenteItem">
+			                	<c:forEach items="${messaggio_list_attribute }" var="messaggioItem">
 									<tr>
-										<td>${utenteItem.nome }</td>
-										<td>${utenteItem.cognome }</td>
-										<td>${utenteItem.username }</td>
-										<td>${utenteItem.stato }</td>
+										<td>${messaggioItem.oggetto }</td>
+									
+										<td>${messaggioItem.letto?'Si':'No' }</td>
 										<td>
-											<a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/utente/show/${utenteItem.id }">Visualizza</a>
-											<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="${pageContext.request.contextPath}/utente/edit/${utenteItem.id }">Edit</a>
-											<a id="changeStatoLink_#_${utenteItem.id }" class="btn btn-outline-${utenteItem.isAttivo()?'danger':'success'} btn-sm link-for-modal" data-bs-toggle="modal" data-bs-target="#confirmOperationModal"  >${utenteItem.isAttivo()?'Disabilita':'Abilita'}</a>
-											<c:if test="${userAdmin}">
-												<a id="resetPasswordLink_#_${utenteItem.id }" class="btn btn-sm btn-warning btn-sm link-for-modal" data-bs-toggle="modal" data-bs-target="#confirmOperationModal2">Reset Password</a>
-											</c:if>
+											<a class="btn btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/messaggio/show/${messaggioItem.id }">Visualizza</a>
+											
+											
 										</td>
+										
+										
+										
 									</tr>
 								</c:forEach>
 			                </tbody>

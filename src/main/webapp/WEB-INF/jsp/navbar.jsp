@@ -13,7 +13,7 @@
             <a class="nav-link active" aria-current="page" href="${pageContext.request.contextPath}/home">Home</a>
           </li>
           <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
+            <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-bs-toggle="dropdown" aria-expanded="false">Azioni</a>
             <ul class="dropdown-menu" aria-labelledby="dropdown07">
               <sec:authorize access="hasRole('ADMIN_USER')">
               	 <li><a class="dropdown-item" href="${pageContext.request.contextPath}/dipendente/search">Ricerca Dipendenti</a></li>
