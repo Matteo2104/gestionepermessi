@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -177,7 +178,6 @@ public class RichiestaPermessoController {
 		model.addAttribute("errorMessage", "Operazione non autorizzata!!");
 		return "permesso";
 	}
-
 	@PostMapping("/update")
 	public String update(@ModelAttribute("edit_richiesta_attr") RichiestaPermessoDTO richiestaPermessoDTO,
 			BindingResult result, Model model, RedirectAttributes redirectAttrs, HttpServletRequest request) {
@@ -195,4 +195,40 @@ public class RichiestaPermessoController {
 		redirectAttrs.addFlashAttribute("errorMessage", "Operazione non autorizzata!!!!");
 		return "redirect:/index";
 	}
+	
+	// CICLO ELIMINAZIONE
+	@GetMapping("/delete/{idRichiesta}")
+	public String delete(@PathVariable(required = true) Long idRichiesta, Model model) {
+		RichiestaPermesso richiestaPermesso = richiestaPermessoService.caricaSingolaRichiesta(idRichiesta);
+		
+		//System.out.println(richiestaPermesso);
+		
+		if (richiestaPermesso.getApprovato()==null || !richiestaPermesso.getApprovato()) {
+			model.addAttribute("delete_richiesta_attr",
+					RichiestaPermessoDTO.buildRichiestaPermessoDTOFromModel(richiestaPermesso));
+			return "permesso/delete";
+		}
+
+		model.addAttribute("errorMessage", "Operazione non autorizzata!!");
+		return "permesso";
+	}
+	@PostMapping("/remove")
+	public String remove(@RequestParam(required = true) Long idImpiegato,
+			RedirectAttributes redirectAttrs) {
+		
+		
+		RichiestaPermesso richiestaPermesso = richiestaPermessoService.caricaSingolaRichiesta(idImpiegato);
+		
+		// se la richiesta non è stata ancora approvata...
+		if (richiestaPermesso.getApprovato() == null || !richiestaPermesso.getApprovato()) {
+			richiestaPermessoService.rimuovi(idImpiegato);
+			redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
+			return "redirect:/permesso";
+		}
+
+		// altrimenti blocco la navigazione
+		redirectAttrs.addFlashAttribute("errorMessage", "Operazione non autorizzata!!!!");
+		return "redirect:/index";
+	}
+	
 }

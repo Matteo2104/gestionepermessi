@@ -67,6 +67,15 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 	}
 	
 	@Override
+	@Transactional
+	public void rimuovi(Long idRichiestaPermesso) {
+		
+		messaggioRepository.delete(messaggioRepository.findByIdPermesso(idRichiestaPermesso));
+		repository.deleteById(idRichiestaPermesso);
+		
+	}
+	
+	@Override
 	@Transactional(readOnly = true)
 	public List<RichiestaPermesso> listAllRichieste() {
 		return (List<RichiestaPermesso>) repository.findAll();

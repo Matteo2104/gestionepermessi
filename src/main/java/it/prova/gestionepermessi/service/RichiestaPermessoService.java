@@ -24,4 +24,6 @@ public interface RichiestaPermessoService {
 
 	public void aggiorna(RichiestaPermesso richiestaPermesso);
 
+	public void rimuovi(Long idRichiestaPermesso);
+
 }
