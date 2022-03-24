@@ -46,7 +46,7 @@
 				    <div class='card-body'>
 				    	
 				    	
-				    	<sec:authorize access="hasRole({'ADMIN_USER', 'BO_USER'})">
+				    	<sec:authorize access="hasAnyRole({'ADMIN_USER', 'BO_USER'})">
 				    		<a href="${pageContext.request.contextPath }/permesso/search" class='btn btn-outline-secondary' >
 				            	<i class='fa fa-chevron-left'></i> Torna alla Ricerca
 				           	</a>
@@ -65,7 +65,7 @@
 				                <thead>
 				                    <tr>
 			                         	<th>Tipologia Permesso</th>
-				                        <th>Codice Certificato</th>
+				                        
 				                        <th>Data di Inizio</th>
 				                        <th>Data di Fine</th>
 				                       
@@ -76,16 +76,21 @@
 				                	<c:forEach items="${permesso_list_attribute }" var="permessoItem">
 										<tr>
 											<td>${permessoItem.tipoPermesso }</td>
-											<td>${permessoItem.codiceCertificato }</td>
+											
 											<td><fmt:formatDate type = "date" value = "${permessoItem.dataInizio }" /></td>
 											<td><fmt:formatDate type = "date" value = "${permessoItem.dataFine }" /></td>
 											<td>
 												<a class="btn  btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/permesso/show/${permessoItem.id}">Visualizza</a>
 												
+												<sec:authorize access="hasRole('DIPENDENTE_USER')">
+												
 												<c:if test="${not permessoItem.approvato }">
 													<a class="btn  btn-sm btn-outline-warning" href="${pageContext.request.contextPath}/permesso/edit/${permessoItem.id}">Modifica</a>
 													<a class="btn  btn-sm btn-outline-danger" href="${pageContext.request.contextPath}/permesso/delete/${permessoItem.id}">Elimina</a>
 												</c:if>
+												
+												</sec:authorize>
+												
 												<!-- non è possibile modificare o eliminare i permessi 
 													<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="${pageContext.request.contextPath}/regista/edit/${registaItem.id }">Edit</a>
 													<a class="btn btn-outline-danger btn-sm" href="laservletperrimuovere">Delete</a>

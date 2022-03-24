@@ -26,6 +26,7 @@ import it.prova.gestionepermessi.dto.RuoloDTO;
 import it.prova.gestionepermessi.dto.UtenteDTO;
 import it.prova.gestionepermessi.dto.DipendenteDTO;
 import it.prova.gestionepermessi.model.RichiestaPermesso;
+import it.prova.gestionepermessi.model.Ruolo;
 import it.prova.gestionepermessi.model.Utente;
 import it.prova.gestionepermessi.service.DipendenteService;
 import it.prova.gestionepermessi.service.RichiestaPermessoService;
@@ -52,7 +53,7 @@ public class RichiestaPermessoController {
 	
 	@GetMapping
 	public ModelAndView listAllRichieste() {
-		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
 		
 		ModelAndView mv = new ModelAndView();
 		/*
@@ -64,7 +65,39 @@ public class RichiestaPermessoController {
 		}
 		*/
 		
+		
+		
 		List<RichiestaPermesso> richieste = richiestaPermessoService.listAllRichieste();
+		mv.addObject("permesso_list_attribute", richieste);
+		mv.setViewName("permesso/list");
+		return mv;
+	}
+	
+	
+	
+	
+	@GetMapping("/listAllPersonali")
+	public ModelAndView listAllPersonali() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		Utente utenteInSessione = null;
+		 
+		if (auth != null ) {
+			utenteInSessione = utenteService.findByUsername(auth.getName());
+		} 
+		
+		ModelAndView mv = new ModelAndView();
+		/*
+		Utente utenteInSessione = utenteService.findByUsername(auth.getName());
+		
+		for (Ruolo ruolo : utenteInSessione.getRuoli()) {
+			if (ruolo.getCodice().equals(Ruolo.ROLE_ADMIN_USER)) 
+				mv.addObject("userAdmin", true);
+		}
+		*/
+		
+		
+		
+		List<RichiestaPermesso> richieste = richiestaPermessoService.listAllRichiestePersonali(utenteInSessione.getId());
 		mv.addObject("permesso_list_attribute", richieste);
 		mv.setViewName("permesso/list");
 		return mv;
@@ -117,7 +150,7 @@ public class RichiestaPermessoController {
 		return "permesso/searchPersonale";
 	}
 
-	@PostMapping("/listPersonale")
+	@GetMapping("/listPersonale")
 	public String listPersonale(RichiestaPermessoDTO permessoExample, ModelMap model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Long idUtenteInSessione = utenteService.findByUsername(auth.getName()).getId();

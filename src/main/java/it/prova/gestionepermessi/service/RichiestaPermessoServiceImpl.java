@@ -82,6 +82,12 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 	}
 	
 	@Override
+	@Transactional(readOnly = true)
+	public List<RichiestaPermesso> listAllRichiestePersonali(Long id) {
+		return repository.findByIdPersonali(id);
+	}
+	
+	@Override
 	@Transactional
 	public void inserisciNuovo(Long id, RichiestaPermesso richiestaPermesso) {
 		Dipendente dipendente = dipendenteRepository.findById(id).orElse(null);

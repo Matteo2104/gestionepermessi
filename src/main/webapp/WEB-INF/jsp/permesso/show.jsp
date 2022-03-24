@@ -1,5 +1,7 @@
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <!doctype html>
 <html lang="it" class="h-100">
 <head>
@@ -91,9 +93,23 @@
 			    </div>
 			    
 			    <div class='card-footer'>
-			        <a href="${pageContext.request.contextPath }/permesso" class='btn btn-outline-secondary' style='width:80px'>
-			            <i class='fa fa-chevron-left'></i> Back
-			        </a>
+			       
+			        
+			        <sec:authorize access="hasAnyRole({'BO_USER', 'ADMIN_USER'})">
+				    		<a href="${pageContext.request.contextPath }/permesso" class='btn btn-outline-secondary' >
+				            	<i class='fa fa-chevron-left'></i> Indietro
+				           	</a>
+				    </sec:authorize>
+				    
+				    
+			        <sec:authorize access="hasRole('DIPENDENTE_USER')">
+				    		<a href="${pageContext.request.contextPath }/permesso/listPersonale" class='btn btn-outline-secondary' >
+				            	<i class='fa fa-chevron-left'></i> Indietro
+				           	</a>
+				    </sec:authorize>
+				            
+				        
+				        
 			    </div>
 			<!-- end card -->
 			</div>	

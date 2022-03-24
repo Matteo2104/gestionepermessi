@@ -1,5 +1,6 @@
 package it.prova.gestionepermessi.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
@@ -13,4 +14,7 @@ import it.prova.gestionepermessi.model.RichiestaPermesso;
 public interface RichiestaPermessoRepository extends CrudRepository<RichiestaPermesso, Long>, PagingAndSortingRepository<RichiestaPermesso, Long>, JpaSpecificationExecutor<RichiestaPermesso> {
 	@Query("from RichiestaPermesso rp left join fetch rp.dipendente d where rp.id = ?1")
 	Optional<RichiestaPermesso> findByIdConDipendente(Long id);
+	
+	@Query("from RichiestaPermesso rp join rp.dipendente d where d.id = ?1")
+	List<RichiestaPermesso> findByIdPersonali(Long id);
 }

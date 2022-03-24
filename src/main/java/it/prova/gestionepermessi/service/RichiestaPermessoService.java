@@ -26,4 +26,6 @@ public interface RichiestaPermessoService {
 
 	public void rimuovi(Long idRichiestaPermesso);
 
+	public List<RichiestaPermesso> listAllRichiestePersonali(Long id);
+
 }

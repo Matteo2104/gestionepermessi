@@ -16,7 +16,7 @@
 	   
 	   <title>Richiesta Permesso</title>
 	 </head>
-	   <body class="d-flex flex-column h-100">
+	   <body class="d-flex flex-column h-100" onload="javascript:change()">
 	   
 	   		<!-- Fixed navbar -->
 	   		<jsp:include page="../navbar.jsp"></jsp:include>
@@ -50,25 +50,33 @@
 		
 							<form:form modelAttribute="insert_richiesta_attr" method="post" action="save" novalidate="novalidate" class="row g-3">
 					
-								<div class="col-md-3">
+								<div class="col-md-10" >
 									<label for="tipoPermesso" class="form-label">Tipologia Permesso </label>
-								    <select class="form-select" id="tipoPermesso" name="tipoPermesso" >
+								    <select class="form-select" id="tipoPermesso" name="tipoPermesso" onchange="javascript:change()">
 								    	<option value="" selected> - Selezionare - </option>
 								      	<option value="FERIE" >Ferie</option>
-								      	<option value="MALATTIA" >Malattia</option>
+								      	<option value="MALATTIA">Malattia</option>
 								    </select>
 								</div>
 								
-								<div class="col-md-6">
+								
+								
+								<div class="col-md-5" id="codiceCertificato" >
 									<label for="codiceCertificato" class="form-label">Codice Certificato </label>
 									<spring:bind path="codiceCertificato">
-										<input type="text" name="codiceCertificato" id="codiceCertificato" class="form-control" placeholder="Inserire codice certificato" value="${insert_richiesta_attr.codiceCertificato }" required >
+										<input type="text" name="codiceCertificato" id="codiceCertificato" class="form-control " placeholder="Inserire codice certificato" value="${insert_richiesta_attr.codiceCertificato }" required >
 									</spring:bind>
 									<form:errors  path="codiceCertificato" cssClass="error_field" />
 								</div>
 								
+								<div class="input-group col-md-5" id="attachment" >
+								  <label for="tipoPermesso" class="form-label">Allega Certificato </label>
+								  	<input type="file" class="form-control w-50" id="attachment">
+								</div>
+								
+								
 								<fmt:formatDate pattern='yyyy-MM-dd' var="parsedDate" type='date' value='${insert_richiesta_attr.dataInizio}' />
-								<div class="col-md-3">
+								<div class="col-md-5">
 									<label for="dataInizio" class="form-label">Data di Inizio <span class="text-danger">*</span></label>
                         			<spring:bind path="dataInizio">
 	                        		<input class="form-control ${status.error ? 'is-invalid' : ''}" id="dataInizio" type="date" placeholder="dd/MM/yy"
@@ -79,7 +87,7 @@
 								</div>
 								
 								<fmt:formatDate pattern='yyyy-MM-dd' var="parsedDate" type='date' value='${insert_richiesta_attr.dataFine}' />
-								<div class="col-md-3">
+								<div class="col-md-5">
 									<label for="dataFine" class="form-label">Data Fine <span class="text-danger">*</span></label>
                         			<spring:bind path="dataFine">
 	                        		<input class="form-control ${status.error ? 'is-invalid' : ''}" id="dataFine" type="date" placeholder="dd/MM/yy"
@@ -91,15 +99,13 @@
 								
 								
 								
-								<div class="col-md-6">
+								<div class="col-md-10">
 									<label for="note" class="form-label">Note </label>
 									<spring:bind path="note">
-										<input type="text" name="note" id="note" class="form-control" placeholder="Inserire note" value="${insert_richiesta_attr.codiceCertificato }"  >
+										<textarea name="note" id="note" class="form-control w-50" placeholder="Inserire note" value="${insert_richiesta_attr.note }"  ></textarea>
 									</spring:bind>
 									<form:errors  path="note" cssClass="error_field" />
 								</div>
-								
-								
 								
 								
 								
@@ -121,7 +127,26 @@
 		
 						</form:form>
   
-				    
+				    	<script>
+				    		function change() {
+				    			var selectBox = document.getElementById("tipoPermesso");
+				    		    var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+				    		    
+				    		   
+				    		    
+				    		    if (selectedValue == "MALATTIA") {
+				    		    	document.getElementById("codiceCertificato").style.display = "block";
+				    		    	document.getElementById("attachment").style.display = "block";
+				    		    	
+				    		    } else {
+				    		    	document.getElementById("codiceCertificato").style.display = "none";
+				    		    	document.getElementById("attachment").style.display = "none";
+				    		    }
+				    			
+				    			
+				    		}
+				    		
+				    	</script>
 				    
 					<!-- end card-body -->			   
 				    </div>
