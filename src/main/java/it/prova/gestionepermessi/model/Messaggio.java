@@ -24,9 +24,11 @@ public class Messaggio {
 	@Column(name = "letto")
 	private Boolean letto;
 	
+	// inserire riferimento a richiesta permesso
 	
-	
+	/*
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "dipendente_id", nullable = false)
 	private Utente utenteInserimento;
+	*/
 }

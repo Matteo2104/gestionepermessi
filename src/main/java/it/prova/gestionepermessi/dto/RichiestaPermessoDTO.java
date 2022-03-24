@@ -5,16 +5,6 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.persistence.Column;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 
 import it.prova.gestionepermessi.model.Attachment;
 import it.prova.gestionepermessi.model.Dipendente;
@@ -39,7 +29,7 @@ public class RichiestaPermessoDTO {
 	
 	private Attachment attachment;
 	
-	private Dipendente dipendente;
+	private DipendenteDTO dipendente;
 	
 	
 	
@@ -55,6 +45,76 @@ public class RichiestaPermessoDTO {
 	}
 	
 	
+	
+	public Long getId() {
+		return id;
+	}
+	public TipoPermesso getTipoPermesso() {
+		return tipoPermesso;
+	}
+	public Date getDataInizio() {
+		return dataInizio;
+	}
+	public Date getDataFine() {
+		return dataFine;
+	}
+	public Boolean getApprovato() {
+		return approvato;
+	}
+	public String getCodiceCertificato() {
+		return codiceCertificato;
+	}
+	public String getNote() {
+		return note;
+	}
+	public Attachment getAttachment() {
+		return attachment;
+	}
+	public DipendenteDTO getDipendente() {
+		return dipendente;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public void setTipoPermesso(TipoPermesso tipoPermesso) {
+		this.tipoPermesso = tipoPermesso;
+	}
+	public void setDataInizio(Date dataInizio) {
+		this.dataInizio = dataInizio;
+	}
+	public void setDataFine(Date dataFine) {
+		this.dataFine = dataFine;
+	}
+	public void setApprovato(Boolean approvato) {
+		this.approvato = approvato;
+	}
+	public void setCodiceCertificato(String codiceCertificato) {
+		this.codiceCertificato = codiceCertificato;
+	}
+	public void setNote(String note) {
+		this.note = note;
+	}
+	public void setAttachment(Attachment attachment) {
+		this.attachment = attachment;
+	}
+	public void setDipendente(DipendenteDTO dipendente) {
+		this.dipendente = dipendente;
+	}
+	public RichiestaPermesso buildRichiestaPermessoModel(boolean includeIdRoles) {
+		RichiestaPermesso result = new RichiestaPermesso(this.id, this.tipoPermesso, this.dataInizio, this.dataFine, this.approvato, this.codiceCertificato, this.note);
+		
+		if (this.dipendente != null) {
+			result.setDipendente(this.dipendente.buildDipendenteModel(false));
+		}
+		/*
+		if (includeIdRoles && ruoliIds != null)
+			result.setRuoli(Arrays.asList(ruoliIds).stream().map(id -> new Ruolo(id)).collect(Collectors.toSet()));
+		*/
+	
+		return result;
+	}
+	
+	
 	public static RichiestaPermessoDTO buildRichiestaPermessoDTOFromModel(RichiestaPermesso richiestaPermessoModel) {
 		RichiestaPermessoDTO result = new RichiestaPermessoDTO(richiestaPermessoModel.getId(), richiestaPermessoModel.getTipoPermesso(),
 				richiestaPermessoModel.getDataInizio(), richiestaPermessoModel.getDataFine(), richiestaPermessoModel.getApprovato(), 
@@ -67,6 +127,7 @@ public class RichiestaPermessoDTO {
 		return result;
 	}
 	
+	
 	public static List<RichiestaPermessoDTO> createRichiestaPermessoDTOListFromModelSet(Set<RichiestaPermesso> modelSetInput) {
 		return modelSetInput.stream().map(richiestaPermessoEntity -> {
 			return RichiestaPermessoDTO.buildRichiestaPermessoDTOFromModel(richiestaPermessoEntity);
@@ -75,11 +136,12 @@ public class RichiestaPermessoDTO {
 	
 	
 	
+	
 	@Override
 	public String toString() {
 		return "RichiestaPermessoDTO [id=" + id + ", tipoPermesso=" + tipoPermesso + ", dataInizio=" + dataInizio
 				+ ", dataFine=" + dataFine + ", approvato=" + approvato + ", codiceCertificato=" + codiceCertificato
-				+ ", note=" + note + "]";
+				+ ", note=" + note + ", dipendente=" + dipendente + "]";
 	}
 	
 	

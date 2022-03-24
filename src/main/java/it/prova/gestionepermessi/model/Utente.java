@@ -52,6 +52,9 @@ public class Utente {
 	@OneToOne(fetch = FetchType.LAZY, mappedBy="utente")
     //@JoinColumn(name = "dipendente_id", nullable = false, unique=true)
 	private Dipendente dipendente;
+	
+	@OneToMany(fetch = FetchType.LAZY)
+	private Set<Messaggio> messaggi = new HashSet<>();
 
 	
 	public Dipendente getDipendente() {
@@ -62,8 +65,7 @@ public class Utente {
 		this.dipendente = dipendente;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "utenteInserimento")
-	private Set<Messaggio> messaggi = new HashSet<>();
+	
 
 	public Utente() {
 	}

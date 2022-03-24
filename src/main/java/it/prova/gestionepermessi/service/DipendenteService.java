@@ -27,5 +27,7 @@ public interface DipendenteService {
 
 	public void aggiornaDipendente(Dipendente dipendente);
 
+	public List<Dipendente> cercaByCognomeENomeILike(String term);
+
 
 }

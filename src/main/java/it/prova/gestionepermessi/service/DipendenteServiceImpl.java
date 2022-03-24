@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import it.prova.gestionepermessi.model.Dipendente;
+import it.prova.gestionepermessi.model.StatoUtente;
 import it.prova.gestionepermessi.model.Utente;
 import it.prova.gestionepermessi.repository.DipendenteRepository;
 import it.prova.gestionepermessi.repository.UtenteRepository;
@@ -77,6 +78,7 @@ public class DipendenteServiceImpl implements DipendenteService {
 		
 		dipendente.setUtente(utente);
 		utente.setDipendente(dipendente);
+		utente.setStato(StatoUtente.CREATO);
 		
 		utenteRepository.save(utente);
 		repository.save(dipendente);
@@ -156,5 +158,12 @@ public class DipendenteServiceImpl implements DipendenteService {
 			paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
 
 		return repository.findAll(specificationCriteria, paging);
+	}
+	
+	
+	@Override
+	@Transactional(readOnly = true)
+	public List<Dipendente> cercaByCognomeENomeILike(String term) {
+		return repository.findByCognomeIgnoreCaseContainingOrNomeIgnoreCaseContainingOrderByNomeAsc(term, term);
 	}
 }

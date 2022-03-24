@@ -1,5 +1,6 @@
 package it.prova.gestionepermessi.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 
@@ -18,4 +19,7 @@ public interface DipendenteRepository extends CrudRepository<Dipendente, Long>, 
 	Optional<Dipendente> findByIdConRuoli(Long id);
 	
 	Optional<Dipendente> findByNomeAndCognome(String nome, String cognome);
+	
+	public List<Dipendente> findByCognomeIgnoreCaseContainingOrNomeIgnoreCaseContainingOrderByNomeAsc(String cognome,
+			String nome);
 }

@@ -15,13 +15,12 @@
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="dropdown07" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
             <ul class="dropdown-menu" aria-labelledby="dropdown07">
-              <li><a class="dropdown-item" href="${pageContext.request.contextPath}/home">Home</a></li>
               <sec:authorize access="hasRole('ADMIN_USER')">
               	 <li><a class="dropdown-item" href="${pageContext.request.contextPath}/dipendente/search">Ricerca Dipendenti</a></li>
               </sec:authorize>
               <sec:authorize access="hasRole('BO_USER')">
-              <li><a class="dropdown-item" href="${pageContext.request.contextPath}/dipendente/search">Ricerca Registi</a></li>
-              <li><a class="dropdown-item" href="${pageContext.request.contextPath}/dipendente/insert">Inserisci Regista</a></li>
+              	<li><a class="dropdown-item" href="${pageContext.request.contextPath}/permesso/search">Ricerca Permessi</a></li>
+              	<li><a class="dropdown-item" href="${pageContext.request.contextPath}/messaggio/search">Gestione Messaggi</a></li>
               </sec:authorize>
             </ul> 
           </li>
