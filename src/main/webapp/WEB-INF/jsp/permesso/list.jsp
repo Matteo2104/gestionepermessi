@@ -3,6 +3,7 @@
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
+
 <!doctype html>
 <html lang="it" class="h-100" >
 	 <head>
@@ -81,6 +82,10 @@
 											<td>
 												<a class="btn  btn-sm btn-outline-secondary" href="${pageContext.request.contextPath}/permesso/show/${permessoItem.id}">Visualizza</a>
 												
+												<c:if test="${not permessoItem.approvato }">
+													<a class="btn  btn-sm btn-outline-warning" href="${pageContext.request.contextPath}/permesso/edit/${permessoItem.id}">Modifica</a>
+													<a class="btn  btn-sm btn-outline-danger" href="${pageContext.request.contextPath}/permesso/delete/${permessoItem.id}">Elimina</a>
+												</c:if>
 												<!-- non è possibile modificare o eliminare i permessi 
 													<a class="btn  btn-sm btn-outline-primary ml-2 mr-2" href="${pageContext.request.contextPath}/regista/edit/${registaItem.id }">Edit</a>
 													<a class="btn btn-outline-danger btn-sm" href="laservletperrimuovere">Delete</a>

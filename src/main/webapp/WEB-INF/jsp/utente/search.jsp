@@ -5,7 +5,7 @@
 <html lang="it" class="h-100" >
 <head>
 	<jsp:include page="../header.jsp" />
-	<title>Ricerca</title>
+	<title>Ricerca Utenti</title>
 	
     
 </head>
@@ -24,14 +24,11 @@
 			  </button>
 			</div>
 			
-			<div class="alert alert-warning alert-dismissible fade show " role="alert">
-			  Attenzione!!! Funzionalità ancora non implementata. Sulla 'Conferma' per il momento parte il 'listAll'
-			  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" ></button>
-			</div>
+			
 			
 			<div class='card'>
 			    <div class='card-header'>
-			        <h5>Ricerca elementi</h5> 
+			        <h5>Ricerca Utenti</h5> 
 			    </div>
 			    <div class='card-body'>
 	
@@ -75,8 +72,6 @@
 									  </label>
 									</div>
 							</c:forEach>
-							
-							
 							
 							
 							<div class="col-12">	

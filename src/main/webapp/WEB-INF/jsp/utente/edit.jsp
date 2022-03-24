@@ -64,13 +64,7 @@
 									</spring:bind>
 									<form:errors  path="cognome" cssClass="error_field" />
 								</div>
-								<div class="col-md-6">
-									<label for="username" class="form-label">Username <span class="text-danger">*</span></label>
-									<spring:bind path="username">
-										<input type="text" class="form-control ${status.error ? 'is-invalid' : ''}" name="username" id="username" placeholder="Inserire Username" value="${edit_utente_attr.username }" required>
-									</spring:bind>
-									<form:errors  path="username" cssClass="error_field" />
-								</div>
+								
 								 
 								
 								<%--  checkbox ruoli 	--%>

@@ -2,6 +2,8 @@ package it.prova.gestionepermessi.web.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -20,12 +22,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import it.prova.gestionepermessi.dto.RichiestaPermessoDTO;
 import it.prova.gestionepermessi.dto.RuoloDTO;
+import it.prova.gestionepermessi.dto.UtenteDTO;
 import it.prova.gestionepermessi.dto.DipendenteDTO;
 import it.prova.gestionepermessi.model.RichiestaPermesso;
+import it.prova.gestionepermessi.model.Utente;
 import it.prova.gestionepermessi.service.DipendenteService;
 import it.prova.gestionepermessi.service.RichiestaPermessoService;
 import it.prova.gestionepermessi.service.RuoloService;
 import it.prova.gestionepermessi.service.UtenteService;
+import it.prova.gestionepermessi.validation.ValidationNoPassword;
 import it.prova.gestionepermessi.validation.ValidationWithPassword;
 
 @Controller
@@ -156,4 +161,38 @@ public class RichiestaPermessoController {
 	}
 	
 	
+	// CICLO MODIFICA
+	@GetMapping("/edit/{idRichiesta}")
+	public String edit(@PathVariable(required = true) Long idRichiesta, Model model) {
+		RichiestaPermesso richiestaPermesso = richiestaPermessoService.caricaSingolaRichiesta(idRichiesta);
+		
+		//System.out.println(richiestaPermesso);
+		
+		if (richiestaPermesso.getApprovato()==null || !richiestaPermesso.getApprovato()) {
+			model.addAttribute("edit_richiesta_attr",
+					RichiestaPermessoDTO.buildRichiestaPermessoDTOFromModel(richiestaPermesso));
+			return "permesso/edit";
+		}
+
+		model.addAttribute("errorMessage", "Operazione non autorizzata!!");
+		return "permesso";
+	}
+
+	@PostMapping("/update")
+	public String update(@ModelAttribute("edit_richiesta_attr") RichiestaPermessoDTO richiestaPermessoDTO,
+			BindingResult result, Model model, RedirectAttributes redirectAttrs, HttpServletRequest request) {
+
+		if (result.hasErrors()) {
+			return "permesso/edit";
+		}
+
+		if (richiestaPermessoDTO.getApprovato() == null || !richiestaPermessoDTO.getApprovato()) {
+			richiestaPermessoService.aggiorna(richiestaPermessoDTO.buildRichiestaPermessoModel(false));
+			redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
+			return "redirect:/permesso";
+		}
+
+		redirectAttrs.addFlashAttribute("errorMessage", "Operazione non autorizzata!!!!");
+		return "redirect:/index";
+	}
 }

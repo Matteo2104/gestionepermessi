@@ -20,4 +20,8 @@ public interface RichiestaPermessoService {
 
 	public void inserisciNuovo(Long id, RichiestaPermesso richiestaPermesso);
 
+	public RichiestaPermesso caricaSingolaRichiesta(Long id);
+
+	public void aggiorna(RichiestaPermesso richiestaPermesso);
+
 }

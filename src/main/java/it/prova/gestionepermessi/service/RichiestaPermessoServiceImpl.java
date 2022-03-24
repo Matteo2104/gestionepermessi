@@ -40,6 +40,34 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 	
 	@Override
 	@Transactional(readOnly = true)
+	public RichiestaPermesso caricaSingolaRichiesta(Long id) {
+		return repository.findById(id).orElse(null);
+	}
+	
+	@Override
+	@Transactional
+	public void aggiorna(RichiestaPermesso richiestaPermesso) {
+		RichiestaPermesso richiestaPermessoReloaded = repository.findByIdConDipendente(richiestaPermesso.getId()).orElse(null); 
+		Messaggio messaggio = messaggioRepository.findByIdPermesso(richiestaPermesso.getId());
+		
+		//System.out.println(richiestaPermessoReloaded.getDipendente());
+		
+		richiestaPermessoReloaded.setCodiceCertificato(richiestaPermesso.getCodiceCertificato());
+		richiestaPermessoReloaded.setDataInizio(richiestaPermesso.getDataInizio());
+		richiestaPermessoReloaded.setDataFine(richiestaPermesso.getDataFine());
+		richiestaPermessoReloaded.setTipoPermesso(richiestaPermesso.getTipoPermesso());
+		richiestaPermessoReloaded.setNote(richiestaPermesso.getNote());
+		
+		repository.save(richiestaPermessoReloaded);
+		
+		// faccio le opportune modifiche
+		messaggio.setTesto("Con la presente, si richiede un permesso di tipo + " + richiestaPermesso.getTipoPermesso() + " che va dal " + richiestaPermesso.getDataInizio() + " al " + richiestaPermesso.getDataFine());
+		messaggio.setRichiestaPermesso(richiestaPermesso);
+		messaggioRepository.save(messaggio);
+	}
+	
+	@Override
+	@Transactional(readOnly = true)
 	public List<RichiestaPermesso> listAllRichieste() {
 		return (List<RichiestaPermesso>) repository.findAll();
 	}
