@@ -25,6 +25,18 @@ public class MessaggioServiceImpl implements MessaggioService {
 	private MessaggioRepository repository;
 	
 	@Override
+	@Transactional
+	public int contaQuantiNonLetti() {
+		return repository.contaQuantiNonLetti();
+	}
+	
+	@Override
+	@Transactional
+	public List<Messaggio> listAll() {
+		return repository.listAll();
+	}
+	
+	@Override
 	@Transactional(readOnly = true)
 	public Page<Messaggio> findByExample(Messaggio example, Integer pageNo, Integer pageSize, String sortBy) {
 		Specification<Messaggio> specificationCriteria = (root, query, cb) -> {

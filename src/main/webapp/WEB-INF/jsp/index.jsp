@@ -1,4 +1,5 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 
 <!doctype html>
 <html lang="it" class="h-100" >
@@ -11,7 +12,7 @@
 	   
 	   <title>Gestione Permessi</title>
 	 </head>
-	   <body class="d-flex flex-column h-100">
+	   <body class="d-flex flex-column h-100" onload="javascript:showModal()">
 	   		
 	   		<!-- #####################################  -->
 	   		<!-- elementi grafici per le features in basso  -->
@@ -49,6 +50,15 @@
 				  ${errorMessage}
 				  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close" ></button>
 				</div>
+				
+				
+				<sec:authorize access="hasRole('BO_USER')">
+					<c:if test="${nuoviMessaggi gt 0}">
+						
+					
+				    </c:if>
+			    </sec:authorize>
+			    
 			    
 			     <div class="p-5 mb-4 bg-light rounded-3">
 				      <div class="container-fluid py-5">
@@ -105,6 +115,44 @@
 			  </div>
 			  
 			</main>
+			
+						<script>
+							function showModal() {
+								if (${nuoviMessaggi > 0}) {
+									document.getElementById('newMessageModal').style.display = "block";
+								}
+							}
+							
+							function closeModal() {
+								document.getElementById('newMessageModal').style.display = "none";
+							}
+						</script>
+						
+						
+			
+			<!-- Modal -->
+					<div class="modal" id="newMessageModal" tabindex="-1"  aria-labelledby="confirmOperationModalLabel"
+						    aria-hidden="true">
+						    <div class="modal-dialog" >
+						        <div class="modal-content">
+						            <div class="modal-header">
+						                <h5 class="modal-title" id="confirmOperationModalLabel">Conferma Operazione</h5>
+						                <button type="button" class="btn-close" onclick="javascript:closeModal()" aria-label="Close"></button>
+						            </div>
+						            <div class="modal-body">
+						                Ci sono ${nuoviMessaggi } Messaggi non letti
+						            </div>
+						            
+							            <div class="modal-footer">
+							            	
+							                <button type="button" class="btn btn-secondary" onclick="javascript:closeModal()">Chiudi</button>
+							                <a class="btn btn-primary" href="${pageContext.request.contextPath}/messaggio" >Vedi Messaggi</a>
+							            </div>
+						            
+						        </div>
+						    </div>
+						</div>
+					<!-- end Modal -->
 			
 			<!-- Footer -->
 			<jsp:include page="./footer.jsp" />

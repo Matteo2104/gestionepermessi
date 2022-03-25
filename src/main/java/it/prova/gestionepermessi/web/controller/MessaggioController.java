@@ -9,10 +9,12 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import it.prova.gestionepermessi.dto.DipendenteDTO;
 import it.prova.gestionepermessi.dto.MessaggioDTO;
 import it.prova.gestionepermessi.dto.RichiestaPermessoDTO;
+import it.prova.gestionepermessi.model.Dipendente;
 import it.prova.gestionepermessi.model.Messaggio;
 import it.prova.gestionepermessi.model.RichiestaPermesso;
 import it.prova.gestionepermessi.service.MessaggioService;
@@ -22,6 +24,19 @@ import it.prova.gestionepermessi.service.MessaggioService;
 public class MessaggioController {
 	@Autowired
 	private MessaggioService messaggioService;
+	
+	@GetMapping
+	public ModelAndView listAll() {
+		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		ModelAndView mv = new ModelAndView();
+		
+		
+		List<Messaggio> messaggi = messaggioService.listAll();
+		mv.addObject("messaggio_list_attribute", messaggi);
+		mv.setViewName("messaggio/list");
+		return mv;
+	}
 	
 	// CICLO RICERCA
 	@GetMapping("/search")
