@@ -64,6 +64,14 @@
 									</spring:bind>
 									<form:errors  path="cognome" cssClass="error_field" />
 								</div>
+								
+								<div class="col-md-6">
+									<label for="codFis" class="form-label">Codice Fiscale <span class="text-danger">*</span></label>
+									<spring:bind path="codFis">
+										<input type="text" name="codFis" id="codFis" class="form-control ${status.error ? 'is-invalid' : ''}" placeholder="Inserire il codice fiscale" value="${insert_dipendente_attr.codFis }" required>
+									</spring:bind>
+									<form:errors  path="codFis" cssClass="error_field" />
+								</div>
 							
 								 <div class="col-md-6">
 								<label for="dataNascita" class="form-label">Data di Nascita</label>
@@ -74,7 +82,7 @@
 								<div class="col-md-6">
 									<label for="dataAssunzione" class="form-label">Data di Assunzione</label>
 	                        		<input class="form-control" id="dataAssunzione" type="date" placeholder="dd/MM/yy"
-	                            		title="formato : gg/mm/aaaa"  name="datdataAssunzioneeCreated" >
+	                            		title="formato : gg/mm/aaaa"  name="dataAssunzione" >
 								</div>
 								
 								<div class="col-md-6">

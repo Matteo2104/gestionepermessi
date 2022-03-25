@@ -80,7 +80,7 @@ public class MessaggioServiceImpl implements MessaggioService {
 			
 			
 			if (example.getRichiestaPermesso() != null && example.getRichiestaPermesso().getDipendente() != null && example.getRichiestaPermesso().getDipendente().getId() != null) 
-				predicates.add(cb.equal(cb.upper(root.get("dipendente")), example.getRichiestaPermesso().getDipendente().getId()));
+				predicates.add(cb.equal(cb.upper(root.join("richiestaPermesso").get("dipendente")), example.getRichiestaPermesso().getDipendente().getId()));
 			
 		
 			

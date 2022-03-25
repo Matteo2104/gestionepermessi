@@ -48,6 +48,10 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 		
 		richiestaReloaded.setApprovato(true);
 		
+		Messaggio messaggio = messaggioRepository.findByIdPermesso(id);
+		messaggio.setLetto(true);
+		
+		messaggioRepository.save(messaggio);
 		repository.save(richiestaReloaded);
 	}
 	

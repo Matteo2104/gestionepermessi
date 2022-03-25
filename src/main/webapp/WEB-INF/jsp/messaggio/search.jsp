@@ -44,13 +44,13 @@
 						<form method="post" action="${pageContext.request.contextPath}/messaggio/list" class="row g-3">
 						
 							<div class="col-md-6">
-								<label for="nome" class="form-label">Testo</label>
-								<input type="text" name="nome" id="nome" class="form-control" placeholder="Inserire il testo" >
+								<label for="testo" class="form-label">Testo</label>
+								<input type="text" name="testo" id="testo" class="form-control" placeholder="Inserire il testo" >
 							</div>
 							
 							<div class="col-md-6">
-								<label for="cognome" class="form-label">Oggetto</label>
-								<input type="text" name="cognome" id="cognome" class="form-control" placeholder="Inserire l'oggetto" >
+								<label for="oggetto" class="form-label">Oggetto</label>
+								<input type="text" name="oggetto" id="oggetto" class="form-control" placeholder="Inserire l'oggetto" >
 							</div>
 							
 							<div class="col-md-3">
@@ -65,14 +65,14 @@
 							
 							
 							<!-- FORM PER L'INSERIMENTO DEL DIPENDENTE -->
-							<!--
+							
 								<div class="col-md-6">
 										<label for="dipendenteSearchInput" class="form-label">Dipendente:</label>
 											<input class="form-control ${status.error ? 'is-invalid' : ''}" type="text" id="dipendenteSearchInput"
-												name="dipendenteInput" value="${messaggio_search_attr.richiestaPermesso.dipendente.nome}${empty messaggio_search_attr.richiestaPermesso.dipendente.nome?'':' '}${messaggio_search_attr.richiestaPermesso.dipendente.cognome}">
-										<input type="hidden" name="dipendente.id" id="dipendenteId" value="${messaggio_search_attr.richiestaPermesso.dipendente.id}">
+												name="dipendenteInput" value="${permesso_search_attr.dipendente.nome}${empty permesso_search_attr.dipendente.nome?'':' '}${permesso_search_attr.dipendente.cognome}">
+										<input type="hidden" name="dipendente.id" id="dipendenteId" value="${permesso_search_attr.dipendente.id}">
 								</div>
-							-->
+							
 							
 							<div class="col-12">	
 								<button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary">Conferma</button>

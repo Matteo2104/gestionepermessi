@@ -56,21 +56,26 @@ public class MessaggioController {
 		messaggio.setRichiestaPermesso(permesso);
 		
 		model.addAttribute("messaggio_search_attr", messaggio);
+		
+		model.addAttribute("permesso_search_attr", permesso);
 
 		//System.out.println(messaggio.getRichiestaPermesso().getDipendente());
 
 		return "messaggio/search";
 	}
 	@PostMapping("/list")
-	public String list(MessaggioDTO messaggioExample, ModelMap model) {
+	public String list(@ModelAttribute("messaggio_search_attr") MessaggioDTO messaggioExample, 
+			@ModelAttribute RichiestaPermessoDTO richiestaExample, ModelMap model) {
 
 		
-		System.out.println("permesso: " + messaggioExample.getRichiestaPermesso());
+		//System.out.println("permesso: " + richiestaExample);
+		
+		messaggioExample.setRichiestaPermesso(richiestaExample);
 
-//		List<Messaggio> messaggi = messaggioService
-//				.findByExample(messaggioExample.buildMessaggioModel(true, true), null, null, null).toList();
+		List<Messaggio> messaggi = messaggioService
+				.findByExample(messaggioExample.buildMessaggioModel(true, true), null, null, null).toList();
 
-		//model.addAttribute("messaggio_list_attribute", messaggi);
+		model.addAttribute("messaggio_list_attribute", messaggi);
 		return "messaggio/list";
 	}
 	

@@ -1,5 +1,6 @@
 package it.prova.gestionepermessi.web.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -132,7 +133,12 @@ public class DipendenteController {
 	// CICLO INSERIMENTO
 	@GetMapping("/insert")
 	public String create(Model model) {
-		model.addAttribute("ruoli_totali_attr", RuoloDTO.createRuoloDTOListFromModelList(ruoloService.listAll()));
+		List<RuoloDTO> ruoliTotali = new ArrayList<>();
+		for (RuoloDTO ruolo : RuoloDTO.createRuoloDTOListFromModelList(ruoloService.listAll())) {
+			if (ruolo.getCodice().equals("ROLE_DIPENDENTE_USER") || ruolo.getCodice().equals("ROLE_BO_USER"))
+				ruoliTotali.add(ruolo);
+		}
+		model.addAttribute("ruoli_totali_attr", ruoliTotali);
 		model.addAttribute("insert_dipendente_attr", new DipendenteDTO());
 		return "dipendente/insert";
 	}
@@ -148,12 +154,12 @@ public class DipendenteController {
 		 * !utenteDTO.getPassword().equals(utenteDTO.getConfermaPassword()))
 		 * result.rejectValue("confermaPassword", "password.diverse");
 		 */
-
+		/*
 		if (result.hasErrors()) {
 			model.addAttribute("ruoli_totali_attr", RuoloDTO.createRuoloDTOListFromModelList(ruoloService.listAll()));
 			return "dipendente/insert";
 		}
-
+		*/
 		dipendenteService.inserisciNuovo(dipendenteDTO.buildDipendenteModel(false));
 
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
