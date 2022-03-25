@@ -1,6 +1,7 @@
 package it.prova.gestionepermessi.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.domain.Page;
 
@@ -13,5 +14,9 @@ public interface MessaggioService {
 	public int contaQuantiNonLetti();
 
 	public List<Messaggio> listAll();
+
+	public Optional<Messaggio> caricaSingoloMessaggio(Long id);
+
+	public void read(Messaggio messaggio);
 
 }

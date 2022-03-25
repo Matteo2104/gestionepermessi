@@ -1,5 +1,7 @@
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+
 <!doctype html>
 <html lang="it" class="h-100">
 <head>
@@ -18,75 +20,59 @@
 			
 			<div class='card'>
 			    <div class='card-header'>
-			        Visualizza dettaglio Utente
+			        Visualizza dettaglio Messaggio
 			    </div>
-			
+			    
+			    <form:form modelAttribute="show_messaggio_attr" method="post" action="${pageContext.request.contextPath}/messaggio/close">
+			    <form:hidden path="id"/>
+			    
 			    <div class='card-body'>
+			    
 			    	<dl class="row">
 					  <dt class="col-sm-3 text-right">Id:</dt>
-					  <dd class="col-sm-9">${show_utente_attr.id}</dd>
+					  <dd class="col-sm-9">${show_messaggio_attr.id}</dd>
 			    	</dl>
 			    	
 			    	<dl class="row">
-					  <dt class="col-sm-3 text-right">Nome:</dt>
-					  <dd class="col-sm-9">${show_utente_attr.nome}</dd>
+					  <dt class="col-sm-3 text-right">Oggetto:</dt>
+					  <dd class="col-sm-9">${show_messaggio_attr.oggetto}</dd>
+					  <form:hidden path="oggetto"/>
 			    	</dl>
 			    	
 			    	<dl class="row">
-					  <dt class="col-sm-3 text-right">Cognome:</dt>
-					  <dd class="col-sm-9">${show_utente_attr.cognome}</dd>
+					  <dt class="col-sm-3 text-right">Testo:</dt>
+					  <dd class="col-sm-9">${show_messaggio_attr.testo}</dd>
+					   <form:hidden path="testo"/>
 			    	</dl>
 			    	
-			    	<dl class="row">
-					  <dt class="col-sm-3 text-right">Username:</dt>
-					  <dd class="col-sm-9">${show_utente_attr.username}</dd>
-			    	</dl>
 			    	
-			    	<dl class="row">
-					  <dt class="col-sm-3 text-right">Data Creazione:</dt>
-					  <dd class="col-sm-9"><fmt:formatDate type = "date" value = "${show_utente_attr.dateCreated}" /></dd>
-			    	</dl>
 			    	
-			    	<dl class="row">
-					  <dt class="col-sm-3 text-right">Stato:</dt>
-					  <dd class="col-sm-9">${show_utente_attr.stato}</dd>
-			    	</dl>
 			    	
-			    	<!-- info Ruoli -->
-			    	<p>
-					  <a class="btn btn-primary btn-sm" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-					    Info Ruoli
-					  </a>
-					</p>
-					<div class="collapse" id="collapseExample">
-					  <div class="card card-body">
-					  <c:forEach items="${show_ruoli_attr}" var="ruoloItem">
-						  	<dl class="row">
-							  <dt class="col-sm-3 text-right">Descrizione:</dt>
-							  <dd class="col-sm-9">${ruoloItem.descrizione}</dd>
-						   	</dl>
-						   	<dl class="row">
-							  <dt class="col-sm-3 text-right">Codice:</dt>
-							  <dd class="col-sm-9">${ruoloItem.codice}</dd>
-						   	</dl>
-					   </c:forEach>
-					  </div>
-					<!-- end info Ruoli -->
-					</div>
+			    	
+			    	
+			    	
+			    
 			    	
 			    <!-- end card body -->
 			    </div>
 			    
 			    <div class='card-footer'>
-			        <a href="${pageContext.request.contextPath }/utente" class='btn btn-outline-secondary' style='width:80px'>
-			            <i class='fa fa-chevron-left'></i> Back
-			        </a>
+			        <div class="col-12">
+			        	<c:if test="${not show_messaggio_attr.letto }" >
+							<button type="submit" name="idMessaggio" value="${show_messaggio_attr.id }" id="idMessaggio" class="btn btn-primary">Esci e segna come letto</button>
+						</c:if>
+						<a class="btn btn-outline-secondary" href="${pageContext.request.contextPath}/messaggio">Indietro</a> 
+					</div>
 			    </div>
+			    </form:form>
 			<!-- end card -->
 			</div>	
 	
 		<!-- end container -->  
 		</div>
+		
+		
+		
 		
 	</main>
 	<jsp:include page="../footer.jsp" />

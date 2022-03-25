@@ -18,4 +18,7 @@ public interface MessaggioRepository extends CrudRepository<Messaggio, Long>, Pa
 	
 	@Query("from Messaggio")
 	List<Messaggio> listAll();
+	
+	@Query("select m from Messaggio m left join fetch m.richiestaPermesso rp where m.id = ?1")
+	Messaggio caricaMessaggioConRichiesta(Long id);
 }

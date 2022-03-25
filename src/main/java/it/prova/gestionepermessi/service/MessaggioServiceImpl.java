@@ -2,6 +2,7 @@ package it.prova.gestionepermessi.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.criteria.Predicate;
 
@@ -32,8 +33,29 @@ public class MessaggioServiceImpl implements MessaggioService {
 	
 	@Override
 	@Transactional
+	public void read(Messaggio messaggio) {
+		Messaggio messaggioReloaded = repository.caricaMessaggioConRichiesta(messaggio.getId());
+		
+		messaggioReloaded.setLetto(messaggio.getLetto());
+		
+		System.out.println(messaggio);
+		System.out.println(messaggioReloaded);
+		
+		messaggioReloaded.setLetto(true);
+		
+		repository.save(messaggioReloaded);
+	}
+	
+	@Override
+	@Transactional
 	public List<Messaggio> listAll() {
 		return repository.listAll();
+	}
+	
+	@Override
+	@Transactional
+	public Optional<Messaggio> caricaSingoloMessaggio(Long id) {
+		return repository.findById(id);
 	}
 	
 	@Override

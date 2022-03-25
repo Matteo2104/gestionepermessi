@@ -85,12 +85,11 @@ public class MessaggioDTO {
 	}
 	
 	
-	public static RichiestaPermessoDTO buildRichiestaPermessoDTOFromModel(RichiestaPermesso richiestaPermessoModel) {
-		RichiestaPermessoDTO result = new RichiestaPermessoDTO(richiestaPermessoModel.getId(), richiestaPermessoModel.getTipoPermesso(),
-				richiestaPermessoModel.getDataInizio(), richiestaPermessoModel.getDataFine(), richiestaPermessoModel.getApprovato(), 
-				richiestaPermessoModel.getCodiceCertificato(), richiestaPermessoModel.getNote());
+	public static MessaggioDTO buildMessaggioDTOFromModel(Messaggio messaggioModel) {
+		MessaggioDTO result = new MessaggioDTO(messaggioModel.getId(), messaggioModel.getOggetto(),
+				messaggioModel.getTesto(), messaggioModel.getLetto());
 		
-		result.setDipendente(DipendenteDTO.buildDipendenteDTOFromModel(richiestaPermessoModel.getDipendente()));
+		//result.setDipendente(DipendenteDTO.buildDipendenteDTOFromModel(richiestaPermessoModel.getDipendente()));
 		
 		/*
 		if (!dipendenteModel.getRichiestePermesso().isEmpty())
@@ -106,4 +105,12 @@ public class MessaggioDTO {
 			return RichiestaPermessoDTO.buildRichiestaPermessoDTOFromModel(richiestaPermessoEntity);
 		}).collect(Collectors.toList());
 	}
+	
+	
+	@Override
+	public String toString() {
+		return "MessaggioDTO [id=" + id + ", testo=" + testo + ", oggetto=" + oggetto + ", letto=" + letto + "]";
+	}
+	
+	
 }

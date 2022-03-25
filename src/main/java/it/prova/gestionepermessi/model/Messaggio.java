@@ -75,6 +75,11 @@ public class Messaggio {
 	public void setRichiestaPermesso(RichiestaPermesso richiestaPermesso) {
 		this.richiestaPermesso = richiestaPermesso;
 	}
+	@Override
+	public String toString() {
+		return "Messaggio [id=" + id + ", testo=" + testo + ", oggetto=" + oggetto + ", letto=" + letto
+				+ ", richiestaPermesso=" + richiestaPermesso + "]";
+	}
 	
 	
 	/*
@@ -82,4 +87,6 @@ public class Messaggio {
 	@JoinColumn(name = "dipendente_id", nullable = false)
 	private Utente utenteInserimento;
 	*/
+	
+	
 }
