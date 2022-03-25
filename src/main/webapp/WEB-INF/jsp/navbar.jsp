@@ -39,25 +39,19 @@
 		      </li>
 		   </sec:authorize>
         </ul>
+      
+      
+      
+	      	<sec:authorize access="isAuthenticated()">
+	      			<span class="navbar-text">
+	     			<a class="nav-link text-light" href="${pageContext.request.contextPath}/logout">Logout</a>
+	     			</span>
+			      	<span class="navbar-text">
+			            Utente: ${userInfo.username} (${userInfo.nome } ${userInfo.cognome})
+			        </span>
+	
+	      	</sec:authorize>
       </div>
-      
-      
-      <sec:authorize access="isAuthenticated()">
-      
-      	<div class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle text-light" href="#" id="dropdown07" data-bs-toggle="dropdown" aria-expanded="false">Dropdown</a>
-            <div class="dropdown-menu" aria-labelledby="dropdown07">
-              
-              <a class="dropdown-item" href="${pageContext.request.contextPath}/utente/reset">Reset Password</a>
-              <a class="dropdown-item" href="${pageContext.request.contextPath}/logout">Logout</a>
-             
-            </div> 
-            
-         </div>
-         <p class="navbar-text">Utente: ${userInfo.username }(${userInfo.nome } ${userInfo.cognome })</p>
-         
-
-      </sec:authorize>
     </div>
   </nav>
   
