@@ -16,13 +16,18 @@
 	
 	<!-- Begin page content -->
 	<main class="flex-shrink-0">
+	
 	  	<div class="container">
 			
+			
 			<div class='card'>
+			
 			    <div class='card-header'>
 			        Visualizza Dettaglio Richiesta Permesso
 			    </div>
-			
+			    
+			    
+				<form method="post" action="${pageContext.request.contextPath}/permesso/approva">
 			    <div class='card-body'>
 			    	<dl class="row">
 					  <dt class="col-sm-3 text-right">Id:</dt>
@@ -64,6 +69,31 @@
 					  <dd class="col-sm-9">${show_richiesta_attr.note}</dd>
 			    	</dl>
 			    	
+			    	<div class='card-footer'>
+			       
+			        
+			        <sec:authorize access="hasAnyRole({'BO_USER', 'ADMIN_USER'})">
+			        	<c:if test="${not show_richiesta_attr.approvato}">
+			        		<button class="btn btn-primary" type="submit" >Approva</button>
+			        		<input type="hidden" id="idRichiesta" name="idRichiesta" value="${show_richiesta_attr.id}">
+			        	</c:if>
+			        	
+				    	<a href="${pageContext.request.contextPath}/permesso" class='btn btn-outline-secondary' >
+				            <i class='fa fa-chevron-left'></i> Indietro
+				        </a>
+				    </sec:authorize>
+				    
+				    
+			        <sec:authorize access="hasRole('DIPENDENTE_USER')">
+				    		<a href="${pageContext.request.contextPath }/permesso/listAllPersonali" class='btn btn-outline-secondary' >
+				            	<i class='fa fa-chevron-left'></i> Indietro
+				           	</a>
+				    </sec:authorize>
+				            
+				      
+				        
+			    </div>
+			    	
 			    	<!-- info Attachment -->
 			    	<!-- 
 			    	<p>
@@ -88,34 +118,17 @@
 					<!-- end info Ruoli -->
 					
 					</div>
-			    	
+			    	</form>  
 			    <!-- end card body -->
 			    </div>
 			    
-			    <div class='card-footer'>
-			       
-			        
-			        <sec:authorize access="hasAnyRole({'BO_USER', 'ADMIN_USER'})">
-				    		<a href="${pageContext.request.contextPath }/permesso" class='btn btn-outline-secondary' >
-				            	<i class='fa fa-chevron-left'></i> Indietro
-				           	</a>
-				    </sec:authorize>
-				    
-				    
-			        <sec:authorize access="hasRole('DIPENDENTE_USER')">
-				    		<a href="${pageContext.request.contextPath }/permesso/listAllPersonali" class='btn btn-outline-secondary' >
-				            	<i class='fa fa-chevron-left'></i> Indietro
-				           	</a>
-				    </sec:authorize>
-				            
-				        
-				        
-			    </div>
+			    
 			<!-- end card -->
 			</div>	
 	
 		<!-- end container -->  
 		</div>
+		
 		
 	</main>
 	<jsp:include page="../footer.jsp" />

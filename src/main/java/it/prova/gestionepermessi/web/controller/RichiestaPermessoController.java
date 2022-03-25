@@ -289,4 +289,17 @@ public class RichiestaPermessoController {
 		return "redirect:/index";
 	}
 	
+	// APPROVAZIONE
+	@PostMapping("/approva")
+	public String update(@RequestParam(name="idRichiesta") Long idRichiesta,
+			RedirectAttributes redirectAttrs, HttpServletRequest request) {
+
+		//System.out.println(idRichiesta);
+		
+		richiestaPermessoService.approva(idRichiesta);
+
+		redirectAttrs.addFlashAttribute("successMessage", "Richiesta Autorizzata");
+		return "redirect:/permesso";
+	}
+	
 }

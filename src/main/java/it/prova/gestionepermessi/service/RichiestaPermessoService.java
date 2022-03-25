@@ -28,4 +28,6 @@ public interface RichiestaPermessoService {
 
 	public List<RichiestaPermesso> listAllRichiestePersonali(Long id);
 
+	public void approva(Long id);
+
 }

@@ -42,6 +42,16 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 	}
 	
 	@Override
+	@Transactional
+	public void approva(Long id) {
+		RichiestaPermesso richiestaReloaded = repository.findById(id).orElse(null);
+		
+		richiestaReloaded.setApprovato(true);
+		
+		repository.save(richiestaReloaded);
+	}
+	
+	@Override
 	@Transactional(readOnly = true)
 	public RichiestaPermesso caricaSingolaRichiesta(Long id) {
 		return repository.findById(id).orElse(null);
