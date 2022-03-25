@@ -5,6 +5,8 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -30,6 +32,7 @@ import it.prova.gestionepermessi.model.Attachment;
 import it.prova.gestionepermessi.model.RichiestaPermesso;
 import it.prova.gestionepermessi.model.Ruolo;
 import it.prova.gestionepermessi.model.Utente;
+import it.prova.gestionepermessi.service.AttachmentService;
 import it.prova.gestionepermessi.service.DipendenteService;
 import it.prova.gestionepermessi.service.RichiestaPermessoService;
 import it.prova.gestionepermessi.service.RuoloService;
@@ -45,6 +48,8 @@ public class RichiestaPermessoController {
 	private RichiestaPermessoService richiestaPermessoService;
 	@Autowired
 	private DipendenteService dipendenteService;
+	@Autowired
+	private AttachmentService attachmentService;
 	
 	
 	// se non serve toglilo
@@ -136,6 +141,9 @@ public class RichiestaPermessoController {
 	public String show(@PathVariable(required = true) Long idRichiestaPermesso, Model model) {
 		RichiestaPermesso richiesta = richiestaPermessoService.caricaSingolaRichiestaConDipendente(idRichiestaPermesso);
 		RichiestaPermessoDTO richiestaDTO = RichiestaPermessoDTO.buildRichiestaPermessoDTOFromModel(richiesta);
+		
+		Attachment attachment = attachmentService.caricaAttachmentByIdRichiesta(richiesta.getId());
+		richiestaDTO.setAttachment(attachment);
 		
 		//System.out.println(utente);
 		
@@ -300,6 +308,19 @@ public class RichiestaPermessoController {
 
 		redirectAttrs.addFlashAttribute("successMessage", "Richiesta Autorizzata");
 		return "redirect:/permesso";
+	}
+	
+	
+	
+	@GetMapping("/showAttachment/{idAttachment}")
+	public ResponseEntity<byte[]> showAttachment(@PathVariable(required = true) Long idAttachment) {
+
+		Attachment file = attachmentService.caricaSingoloElemento(idAttachment);
+
+		return ResponseEntity.ok()
+				.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + file.getNomeFile() + "\"")
+				.body(file.getPayload());
+
 	}
 	
 }

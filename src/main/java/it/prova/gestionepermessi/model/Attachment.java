@@ -20,6 +20,10 @@ public class Attachment {
 	private String contentType;
 	@Column(name = "payload")
 	private byte[] payload;
+	
+	
+	
+	
 	public Long getId() {
 		return id;
 	}

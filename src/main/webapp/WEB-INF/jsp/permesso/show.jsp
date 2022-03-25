@@ -69,10 +69,45 @@
 					  <dd class="col-sm-9">${show_richiesta_attr.note}</dd>
 			    	</dl>
 			    	
+			    	
+			    	
+			    	 <p>
+					  <a class="btn btn-primary btn-sm" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
+					    Info Allegato
+					  </a>
+					</p>
+					<div class="collapse" id="collapseExample">
+					  <div class="card card-body">
+					  	<dl class="row">
+					  		<dt class="col-sm-3 text-right">Id: </dt>
+					  		<dd class="col-sm-9" >${show_richiesta_attr.attachment.id}</dd>
+					  	</dl>
+					  	<dl class="row">
+					  		<dt class="col-sm-3 text-right">Nome File: </dt>
+					  		<dd class="col-sm-9">${show_richiesta_attr.attachment.nomeFile}</dd>
+					  	</dl>
+					  	<dl class="row">
+					  		<dt class="col-sm-3 text-right">Tipo File: </dt>
+					  		<dd class="col-sm-9">${show_richiesta_attr.attachment.contentType }</dd>
+					  	</dl>
+					  	
+					  	<a class="btn  btn-sm btn-outline-secondary col-md-3" href="${pageContext.request.contextPath}/permesso/showAttachment/${show_richiesta_attr.attachment.id }">Visualizza Allegato</a>
+					  	
+					  	
+					  </div>
+					  
+			
+					</div>
+					 <!-- end info Attachment -->
+					
+					
+			    	
 			    	<div class='card-footer'>
 			       
-			        
-			        <sec:authorize access="hasAnyRole({'BO_USER', 'ADMIN_USER'})">
+			    
+					
+					
+					<sec:authorize access="hasAnyRole({'BO_USER', 'ADMIN_USER'})">
 			        	<c:if test="${not show_richiesta_attr.approvato}">
 			        		<button class="btn btn-primary" type="submit" >Approva</button>
 			        		<input type="hidden" id="idRichiesta" name="idRichiesta" value="${show_richiesta_attr.id}">
@@ -89,35 +124,12 @@
 				            	<i class='fa fa-chevron-left'></i> Indietro
 				           	</a>
 				    </sec:authorize>
-				            
-				      
 				        
 			    </div>
 			    	
 			    	<!-- info Attachment -->
-			    	<!-- 
-			    	<p>
-					  <a class="btn btn-primary btn-sm" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
-					    Info Ruoli
-					  </a>
-					</p>
-					<div class="collapse" id="collapseExample">
-					  <div class="card card-body">
-					  <c:forEach items="${show_ruoli_attr}" var="ruoloItem">
-						  	<dl class="row">
-							  <dt class="col-sm-3 text-right">Descrizione:</dt>
-							  <dd class="col-sm-9">${ruoloItem.descrizione}</dd>
-						   	</dl>
-						   	<dl class="row">
-							  <dt class="col-sm-3 text-right">Codice:</dt>
-							  <dd class="col-sm-9">${ruoloItem.codice}</dd>
-						   	</dl>
-					   </c:forEach>
-					  </div>
-					   -->
-					<!-- end info Ruoli -->
-					
-					</div>
+			    	
+			    	
 			    	</form>  
 			    <!-- end card body -->
 			    </div>
