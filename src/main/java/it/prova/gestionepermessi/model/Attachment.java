@@ -20,4 +20,30 @@ public class Attachment {
 	private String contentType;
 	@Column(name = "payload")
 	private byte[] payload;
+	public Long getId() {
+		return id;
+	}
+	public String getNomeFile() {
+		return nomeFile;
+	}
+	public String getContentType() {
+		return contentType;
+	}
+	public byte[] getPayload() {
+		return payload;
+	}
+	public void setId(Long id) {
+		this.id = id;
+	}
+	public void setNomeFile(String nomeFile) {
+		this.nomeFile = nomeFile;
+	}
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
+	}
+	public void setPayload(byte[] payload) {
+		this.payload = payload;
+	}
+	
+	
 }

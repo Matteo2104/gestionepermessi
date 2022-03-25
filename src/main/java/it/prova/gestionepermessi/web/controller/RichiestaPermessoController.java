@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -25,6 +26,7 @@ import it.prova.gestionepermessi.dto.RichiestaPermessoDTO;
 import it.prova.gestionepermessi.dto.RuoloDTO;
 import it.prova.gestionepermessi.dto.UtenteDTO;
 import it.prova.gestionepermessi.dto.DipendenteDTO;
+import it.prova.gestionepermessi.model.Attachment;
 import it.prova.gestionepermessi.model.RichiestaPermesso;
 import it.prova.gestionepermessi.model.Ruolo;
 import it.prova.gestionepermessi.model.Utente;
@@ -150,7 +152,7 @@ public class RichiestaPermessoController {
 		return "permesso/searchPersonale";
 	}
 
-	@GetMapping("/listPersonale")
+	@PostMapping("/listPersonale")
 	public String listPersonale(RichiestaPermessoDTO permessoExample, ModelMap model) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Long idUtenteInSessione = utenteService.findByUsername(auth.getName()).getId();
@@ -167,15 +169,36 @@ public class RichiestaPermessoController {
 	// CICLO INSERIMENTO 
 	@GetMapping("/insert")
 	public String create(Model model) {
-		model.addAttribute("insert_richiesta_attr", new RichiestaPermessoDTO());
+		Attachment attachment = new Attachment();
+		//RichiestaPermessoDTO richiestaPermessoDTO = new RichiestaPermessoDTO();
+
+		model.addAttribute("attachment_insert_richiesta_attr", attachment);
+		//model.addAttribute("insert_richiesta_attr", richiestaPermessoDTO);
 		return "permesso/insert";
 	}
 	@PostMapping("/save")
-	public String save(@ModelAttribute("insert_dipendente_attr") RichiestaPermessoDTO richiestaPermessoDTO,
+	public String save(@ModelAttribute("insert_richiesta_attr") RichiestaPermessoDTO richiestaPermessoDTO,
+			@RequestParam("file") MultipartFile file, Attachment attachment,
 			BindingResult result, Model model, RedirectAttributes redirectAttrs) {
 
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Long idUtenteInSessione = utenteService.findByUsername(auth.getName()).getId();
+		
+		RichiestaPermesso richiestaPermesso = richiestaPermessoDTO.buildRichiestaPermessoModel(true);
+		
+		if (file != null) {
+			attachment.setContentType(file.getContentType());
+			attachment.setNomeFile(file.getName());
+			try {
+				attachment.setPayload(file.getBytes());
+			} catch (Exception e) {
+				throw new RuntimeException("non è stato possibile leggere il contenuto del file");
+				// fare altro
+			}
+			
+			richiestaPermesso.setAttachment(attachment);
+		}
+		
 
 		// System.out.println(utenteDTO);
 		/*
@@ -184,11 +207,13 @@ public class RichiestaPermessoController {
 		 * result.rejectValue("confermaPassword", "password.diverse");
 		 */
 
+		/*
 		if (result.hasErrors()) {
 			return "permesso/insert";
 		}
+		*/
 
-		richiestaPermessoService.inserisciNuovo(idUtenteInSessione, richiestaPermessoDTO.buildRichiestaPermessoModel(false));
+		richiestaPermessoService.inserisciNuovo(idUtenteInSessione, richiestaPermesso);
 
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 		return "redirect:/permesso";

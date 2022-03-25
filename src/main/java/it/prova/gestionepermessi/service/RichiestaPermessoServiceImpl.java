@@ -19,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import it.prova.gestionepermessi.model.Dipendente;
 import it.prova.gestionepermessi.model.Messaggio;
 import it.prova.gestionepermessi.model.RichiestaPermesso;
+import it.prova.gestionepermessi.repository.AttachmentRepository;
 import it.prova.gestionepermessi.repository.DipendenteRepository;
 import it.prova.gestionepermessi.repository.MessaggioRepository;
 import it.prova.gestionepermessi.repository.RichiestaPermessoRepository;
@@ -31,6 +32,8 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 	private DipendenteRepository dipendenteRepository;
 	@Autowired
 	private MessaggioRepository messaggioRepository;
+	@Autowired
+	private AttachmentRepository attachmentRepository;
 	
 	@Override
 	@Transactional(readOnly = true)
@@ -101,6 +104,7 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 		
 		richiestaPermesso.setDipendente(dipendente);
 		dipendente.getRichiestePermesso().add(richiestaPermesso);
+		attachmentRepository.save(richiestaPermesso.getAttachment());
 		repository.save(richiestaPermesso);
 		
 		messaggio.setRichiestaPermesso(richiestaPermesso);
