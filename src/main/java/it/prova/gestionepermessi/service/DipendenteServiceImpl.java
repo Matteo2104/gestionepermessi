@@ -22,6 +22,7 @@ import it.prova.gestionepermessi.model.Dipendente;
 import it.prova.gestionepermessi.model.StatoUtente;
 import it.prova.gestionepermessi.model.Utente;
 import it.prova.gestionepermessi.repository.DipendenteRepository;
+import it.prova.gestionepermessi.repository.RuoloRepository;
 import it.prova.gestionepermessi.repository.UtenteRepository;
 
 @Service
@@ -30,9 +31,13 @@ public class DipendenteServiceImpl implements DipendenteService {
 	private DipendenteRepository repository;
 	@Autowired
 	private UtenteRepository utenteRepository;
+	@Autowired
+	private RuoloRepository ruoloRepository;
 	
 	@Autowired
 	private PasswordEncoder passwordEncoder;
+	
+	
 	
 	@Value("${defaultPassword}")
 	private String defaultPassword;
@@ -70,9 +75,13 @@ public class DipendenteServiceImpl implements DipendenteService {
 	
 	@Override
 	@Transactional
-	public void inserisciNuovo(Dipendente dipendente) {
+	public void inserisciNuovo(Dipendente dipendente, Long idRuolo) {
 		String username = dipendente.getNome().substring(0, 1) + "." + dipendente.getCognome();
 		Utente utente = new Utente(username, passwordEncoder.encode(defaultPassword), dipendente.getNome(), dipendente.getCognome(), new Date());
+		
+		
+		
+		utente.getRuoli().add(ruoloRepository.findById(idRuolo).orElse(null));
 		
 		dipendente.setEmail(username + "@azienda.it");
 		

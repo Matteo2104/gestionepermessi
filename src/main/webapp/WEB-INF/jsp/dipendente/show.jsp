@@ -1,5 +1,6 @@
 <%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!doctype html>
 <html lang="it" class="h-100">
 <head>
@@ -69,6 +70,7 @@
 			    	
 			    	
 			    	<!-- info Richieste Permesso -->
+			    	<sec:authorize access="hasAnyRole('ROLE_DIPENDENTE_USER', 'ROLE_BO_USER')">
 			    	<p>
 					  <a class="btn btn-primary btn-sm" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
 					    Richieste Permesso
@@ -108,7 +110,7 @@
 					  </div>
 					<!-- end info Ruoli -->
 					</div>
-			    	
+			    	</sec:authorize>
 			    <!-- end card body -->
 			    </div>
 			    

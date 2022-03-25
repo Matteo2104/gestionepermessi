@@ -101,26 +101,18 @@
 								</div>
 								
 								
-								
-								<%--  checkbox ruoli 	--%>
-								<%-- facendolo con i tag di spring purtroppo viene un po' spaginato quindi aggiungo class 'a mano'	--%>
-								<div class="col-md-6 form-check" id="ruoliDivId">
-									<p>Ruoli:</p>
-									<form:checkboxes itemValue="id" itemLabel="codice"  element="div class='form-check'" items="${ruoli_totali_attr}" path="utente" />
+								<div class="col-md-3">
+									<label for="idRuolo" class="form-label">Ruolo</label>
+									    <select class="form-select " id="idRuolo" name="idRuolo" >
+									    	<option value="" selected> - Selezionare - </option>
+									      	<option value="2" >Back Office</option>
+									    	<option value="3">Dipendente</option>
+								    	</select>
 								</div>
-								<script>
-									$(document).ready(function(){
-										
-										$("#ruoliDivId :input").each(function () {
-											$(this).addClass('form-check-input'); 
-										});
-										$("#ruoliDivId label").each(function () {
-											$(this).addClass('form-check-label'); 
-										});
-										
-									});
-								</script>
-								<%-- fine checkbox ruoli 	--%>
+								
+								
+								
+								
 								
 								
 								<div class="col-12">

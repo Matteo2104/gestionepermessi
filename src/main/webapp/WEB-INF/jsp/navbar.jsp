@@ -21,6 +21,7 @@
               <sec:authorize access="hasRole('BO_USER')">
               	<li><a class="dropdown-item" href="${pageContext.request.contextPath}/permesso/search">Ricerca Permessi</a></li>
               	<li><a class="dropdown-item" href="${pageContext.request.contextPath}/messaggio/search">Gestione Messaggi</a></li>
+              	<li><a class="dropdown-item" href="${pageContext.request.contextPath}/dipendente/search">Gestione Dipendenti</a></li>
               </sec:authorize>
               <sec:authorize access="hasRole('DIPENDENTE_USER')">
               	 <li><a class="dropdown-item" href="${pageContext.request.contextPath}/permesso/searchPersonale">Ricerca Permessi</a></li>

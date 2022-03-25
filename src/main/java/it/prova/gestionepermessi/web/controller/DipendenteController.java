@@ -146,7 +146,10 @@ public class DipendenteController {
 	@PostMapping("/save")
 	public String save(
 			@Validated(ValidationWithPassword.class) @ModelAttribute("insert_dipendente_attr") DipendenteDTO dipendenteDTO,
+			@RequestParam(name="idRuolo") Long idRuolo, 
 			BindingResult result, Model model, RedirectAttributes redirectAttrs) {
+		
+		
 
 		// System.out.println(utenteDTO);
 		/*
@@ -160,7 +163,8 @@ public class DipendenteController {
 			return "dipendente/insert";
 		}
 		*/
-		dipendenteService.inserisciNuovo(dipendenteDTO.buildDipendenteModel(false));
+		
+		dipendenteService.inserisciNuovo(dipendenteDTO.buildDipendenteModel(false), idRuolo);
 
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
 		return "redirect:/dipendente";

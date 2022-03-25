@@ -19,7 +19,7 @@ public interface DipendenteService {
 
 	public Dipendente findByNomeAndCognome(String nome, String cognome);
 
-	public void inserisciNuovo(Dipendente dipendenteInstance);
+	public void inserisciNuovo(Dipendente dipendenteInstance, Long idRuolo);
 
 	public Dipendente caricaSingoloDipendente(Long id);
 
@@ -28,6 +28,7 @@ public interface DipendenteService {
 	public void aggiornaDipendente(Dipendente dipendente);
 
 	public List<Dipendente> cercaByCognomeENomeILike(String term);
+
 
 
 }
