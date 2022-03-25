@@ -95,7 +95,7 @@
 					    <!-- end card body -->
 					    
 					    <div class='card-footer'>
-					        <a href="${pageContext.request.contextPath}/permesso" class='btn btn-outline-secondary' style='width:100px'>
+					        <a href="${pageContext.request.contextPath}/permesso/listAllPersonali" class='btn btn-outline-secondary' style='width:100px'>
 					            <i class='fa fa-chevron-left'></i> Indietro
 					        </a>
 					        <button type="submit" name="idImpiegato" value="${delete_richiesta_attr.id}" id="submit" class="btn btn-danger">Rimuovi</button>

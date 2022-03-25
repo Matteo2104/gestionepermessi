@@ -169,10 +169,10 @@ public class RichiestaPermessoController {
 	// CICLO INSERIMENTO 
 	@GetMapping("/insert")
 	public String create(Model model) {
-		Attachment attachment = new Attachment();
+		//Attachment attachment = new Attachment();
 		//RichiestaPermessoDTO richiestaPermessoDTO = new RichiestaPermessoDTO();
 
-		model.addAttribute("attachment_insert_richiesta_attr", attachment);
+		//model.addAttribute("attachment_insert_richiesta_attr", attachment);
 		//model.addAttribute("insert_richiesta_attr", richiestaPermessoDTO);
 		return "permesso/insert";
 	}
@@ -216,7 +216,7 @@ public class RichiestaPermessoController {
 		richiestaPermessoService.inserisciNuovo(idUtenteInSessione, richiestaPermesso);
 
 		redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
-		return "redirect:/permesso";
+		return "redirect:/permesso/listAllPersonali";
 	}
 	
 	
@@ -247,7 +247,7 @@ public class RichiestaPermessoController {
 		if (richiestaPermessoDTO.getApprovato() == null || !richiestaPermessoDTO.getApprovato()) {
 			richiestaPermessoService.aggiorna(richiestaPermessoDTO.buildRichiestaPermessoModel(false));
 			redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
-			return "redirect:/permesso";
+			return "redirect:/permesso/listAllPersonali";
 		}
 
 		redirectAttrs.addFlashAttribute("errorMessage", "Operazione non autorizzata!!!!");
@@ -281,7 +281,7 @@ public class RichiestaPermessoController {
 		if (richiestaPermesso.getApprovato() == null || !richiestaPermesso.getApprovato()) {
 			richiestaPermessoService.rimuovi(idImpiegato);
 			redirectAttrs.addFlashAttribute("successMessage", "Operazione eseguita correttamente");
-			return "redirect:/permesso";
+			return "redirect:/permesso/listAllPersonali";
 		}
 
 		// altrimenti blocco la navigazione

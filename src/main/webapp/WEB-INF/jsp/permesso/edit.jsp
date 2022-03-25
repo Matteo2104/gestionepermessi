@@ -95,7 +95,7 @@
 								</div>
 									
 								<div class="col-12">	
-									<a href="${pageContext.request.contextPath}/permesso" class='btn btn-outline-secondary' style='width:100px'>
+									<a href="${pageContext.request.contextPath}/permesso/listAllPersonali" class='btn btn-outline-secondary' style='width:100px'>
 					            		<i class='fa fa-chevron-left'></i> Indietro
 					        		</a>
 									<button type="submit" name="submit" value="submit" id="submit" class="btn btn-primary">Conferma</button>

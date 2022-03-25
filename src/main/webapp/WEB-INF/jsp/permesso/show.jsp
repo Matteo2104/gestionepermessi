@@ -103,7 +103,7 @@
 				    
 				    
 			        <sec:authorize access="hasRole('DIPENDENTE_USER')">
-				    		<a href="${pageContext.request.contextPath }/permesso/listPersonale" class='btn btn-outline-secondary' >
+				    		<a href="${pageContext.request.contextPath }/permesso/listAllPersonali" class='btn btn-outline-secondary' >
 				            	<i class='fa fa-chevron-left'></i> Indietro
 				           	</a>
 				    </sec:authorize>

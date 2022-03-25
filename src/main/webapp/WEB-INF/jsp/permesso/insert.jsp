@@ -54,17 +54,57 @@
 								
 								
 								
-								<form enctype="multipart/form-data"  method="post" action="save"  class="row g-3">
-								
-									<div class="col-md-6 datiMalattia ">
-										<label for="descrizione" class="form-label">Descrizione <span class="text-danger">*</span></label>
-											<input type="text" class="form-control " name="descrizione" id="descrizione" placeholder="Inserire descrizione" required>
+							<form enctype="multipart/form-data"  method="post" action="save"  class="row g-3">
+							
+									<div class="col-md-10" >
+										<label for="tipoPermesso" class="form-label">Tipologia Permesso </label>
+								    	<select class="form-select" id="tipoPermesso" name="tipoPermesso" onchange="javascript:change()">
+								    		<option value="" selected> - Selezionare - </option>
+								      		<option value="FERIE" >Ferie</option>
+								      		<option value="MALATTIA">Malattia</option>
+								    	</select>
 									</div>
 									
-									<div class="col-md-6 datiMalattia  ">
+									
+								
+									<div class="col-md-6" id="codiceCertificato">
+										<label for="descrizione" class="form-label">Codice Certificato <span class="text-danger">*</span></label>
+											<input type="text" class="form-control " name="codiceCertificato" id="codiceCertificato" placeholder="Inserire codice certificato" >
+									</div>
+									
+									<div class="col-md-6" id="attachment">
 									  <label for="allegato" class="form-label">Allegato <span class="text-danger">*</span></label>
 									  <input class="form-control" type="file" id="allegato" name="file" required>
 									</div>
+									
+									
+									
+									
+									<fmt:formatDate pattern='yyyy-MM-dd' var="parsedDate" type='date' value='' />
+								<div class="col-md-5">
+									<label for="dataInizio" class="form-label">Data di Inizio <span class="text-danger">*</span></label>
+                        			
+	                        		<input class="form-control ${status.error ? 'is-invalid' : ''}" id="dataInizio" type="date" placeholder="dd/MM/yy"
+	                            		title="formato : gg/mm/aaaa"  name="dataInizio" required 
+	                            		value="${parsedDate}" >
+		                            
+	                            	
+								</div>
+								
+								<fmt:formatDate pattern='yyyy-MM-dd' var="parsedDate" type='date' value='' />
+								<div class="col-md-5">
+									<label for="dataFine" class="form-label">Data Fine <span class="text-danger">*</span></label>
+	                        		<input class="form-control ${status.error ? 'is-invalid' : ''}" id="dataFine" type="date" placeholder="dd/MM/yy"
+	                            		title="formato : gg/mm/aaaa"  name="dataFine" required 
+	                            		value="${parsedDate}" >
+								</div>
+								
+								
+								
+								<div class="col-md-10">
+									<label for="note" class="form-label">Note </label>
+										<textarea name="note" id="note" class="form-control w-50" placeholder="Inserire note"  ></textarea>
+								</div>
 								
 									<div class="col-12">
 										<button type="submit" name="confirmButton"  id="confirmButton" class="btn btn-primary"  >Conferma</button>
@@ -77,7 +117,7 @@
 								
 								
 								
-						<!--
+						
   
 				    	<script>
 				    		function change() {
@@ -99,7 +139,7 @@
 				    		}
 				    		
 				    	</script>
-				      -->
+				      
 					<!-- end card-body -->			   
 				    </div>
 				<!-- end card -->

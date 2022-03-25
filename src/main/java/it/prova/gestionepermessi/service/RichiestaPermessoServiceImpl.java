@@ -72,10 +72,15 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 	@Override
 	@Transactional
 	public void rimuovi(Long idRichiestaPermesso) {
+		RichiestaPermesso richiestaPermesso = repository.findById(idRichiestaPermesso).orElse(null);
 		
 		messaggioRepository.delete(messaggioRepository.findByIdPermesso(idRichiestaPermesso));
-		repository.deleteById(idRichiestaPermesso);
 		
+		if (richiestaPermesso.getAttachment() != null) {
+			attachmentRepository.delete(richiestaPermesso.getAttachment());
+		}
+		
+		repository.deleteById(idRichiestaPermesso);
 	}
 	
 	@Override
