@@ -27,14 +27,14 @@
 			  <div class="container">
 			  
 			  		<%-- se l'attributo in request ha errori --%>
-			  		<!--  
+			  		<!--  -->
 					<spring:hasBindErrors  name="insert_richiesta_attr">
 						<%-- alert errori --%>
 						<div class="alert alert-danger " role="alert">
 							Attenzione!! Sono presenti errori di validazione
 						</div>
 					</spring:hasBindErrors>
-					-->
+					
 			  
 			  		<div class="alert alert-danger alert-dismissible fade show ${errorMessage==null?'d-none':'' }" role="alert">
 					  ${errorMessage}
@@ -54,54 +54,56 @@
 								
 								
 								
-							<form enctype="multipart/form-data"  method="post" action="save"  class="row g-3">
+							<form:form enctype="multipart/form-data"  method="post" action="save"  class="row g-3">
 							
 									<div class="col-md-10" >
 										<label for="tipoPermesso" class="form-label">Tipologia Permesso </label>
+										
 								    	<select class="form-select" id="tipoPermesso" name="tipoPermesso" onchange="javascript:change()">
-								    		<option value="" selected> - Selezionare - </option>
+								    		<option value="${ insert_richiesta_attr.tipoPermesso}" selected> ${insert_richiesta_attr.tipoPermesso!=null?insert_richiesta_attr.tipoPermesso:'- Selezionare -'}  </option>
 								      		<option value="FERIE" >Ferie</option>
 								      		<option value="MALATTIA">Malattia</option>
 								    	</select>
+								    	
 									</div>
 									
 									
 								
 									<div class="col-md-6" id="codiceCertificato">
 										<label for="descrizione" class="form-label">Codice Certificato <span class="text-danger">*</span></label>
-											<input type="text" class="form-control " name="codiceCertificato" id="codiceCertificato" placeholder="Inserire codice certificato" >
+											<input type="text" class="form-control " name="codiceCertificato" id="codiceCertificato" placeholder="Inserire codice certificato" value="${insert_richiesta_attr.codiceCertificato}" >
 									</div>
 									
 									<div class="col-md-6" id="attachment">
 									  <label for="allegato" class="form-label">Allegato <span class="text-danger">*</span></label>
-									  <input class="form-control" type="file" id="allegato" name="file" required>
+									  <input class="form-control" type="file" id="allegato" name="file" >
 									</div>
 									
 									
 									<div class="form-check">
-									  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault" >
-									  <label class="form-check-label" for="flexCheckDefault">
+									  <input class="form-check-input" type="checkbox" value="" id="giornoSingolo" >
+									  <label class="form-check-label" for="giornoSingolo">
 									    Giorno singolo
 									  </label>
 									</div>
 									
 									
-									<fmt:formatDate pattern='yyyy-MM-dd' var="parsedDate" type='date' value='' />
+									<fmt:formatDate pattern='yyyy-MM-dd' var="parsedDate" type='date' value="${insert_richiesta_attr.dataInizio}" />
 								<div class="col-md-5">
 									<label for="dataInizio" class="form-label">Data di Inizio <span class="text-danger">*</span></label>
-                        			
 	                        		<input class="form-control ${status.error ? 'is-invalid' : ''}" id="dataInizio" type="date" placeholder="dd/MM/yy"
-	                            		title="formato : gg/mm/aaaa"  name="dataInizio" required 
+	                            		title="formato : gg/mm/aaaa"  name="dataInizio"  required 
 	                            		value="${parsedDate}" >
 		                            
+									
 	                            	
 								</div>
 								
-								<fmt:formatDate pattern='yyyy-MM-dd' var="parsedDate" type='date' value='' />
+								<fmt:formatDate pattern='yyyy-MM-dd' var="parsedDate" type='date' value="${insert_richiesta_attr.dataFine}" />
 								<div class="col-md-5">
 									<label for="dataFine" class="form-label">Data Fine <span class="text-danger">*</span></label>
 	                        		<input class="form-control ${status.error ? 'is-invalid' : ''}" id="dataFine" type="date" placeholder="dd/MM/yy"
-	                            		title="formato : gg/mm/aaaa"  name="dataFine" required 
+	                            		title="formato : gg/mm/aaaa"  name="dataFine"  required 
 	                            		value="${parsedDate}" >
 								</div>
 								
@@ -109,14 +111,14 @@
 								
 								<div class="col-md-10">
 									<label for="note" class="form-label">Note </label>
-										<textarea name="note" id="note" class="form-control w-50" placeholder="Inserire note"  ></textarea>
+										<textarea name="note" id="note" class="form-control w-50" placeholder="Inserire note" value="${insert_richiesta_attr.note}" ></textarea>
 								</div>
 								
 									<div class="col-12">
 										<button type="submit" name="confirmButton"  id="confirmButton" class="btn btn-primary"  >Conferma</button>
 									</div>
 			
-							</form>
+							</form:form>
 								
 								
 								

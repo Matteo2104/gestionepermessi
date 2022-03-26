@@ -3,6 +3,7 @@ package it.prova.gestionepermessi.web.controller;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
@@ -31,6 +32,7 @@ import it.prova.gestionepermessi.dto.DipendenteDTO;
 import it.prova.gestionepermessi.model.Attachment;
 import it.prova.gestionepermessi.model.RichiestaPermesso;
 import it.prova.gestionepermessi.model.Ruolo;
+import it.prova.gestionepermessi.model.TipoPermesso;
 import it.prova.gestionepermessi.model.Utente;
 import it.prova.gestionepermessi.service.AttachmentService;
 import it.prova.gestionepermessi.service.DipendenteService;
@@ -181,14 +183,30 @@ public class RichiestaPermessoController {
 		//RichiestaPermessoDTO richiestaPermessoDTO = new RichiestaPermessoDTO();
 
 		//model.addAttribute("attachment_insert_richiesta_attr", attachment);
-		//model.addAttribute("insert_richiesta_attr", richiestaPermessoDTO);
+		model.addAttribute("insert_richiesta_attr", new RichiestaPermessoDTO());
 		return "permesso/insert";
 	}
 	@PostMapping("/save")
-	public String save(@ModelAttribute("insert_richiesta_attr") RichiestaPermessoDTO richiestaPermessoDTO,
-			@RequestParam("file") MultipartFile file, Attachment attachment,
+	public String save(@Valid @ModelAttribute("insert_richiesta_attr") RichiestaPermessoDTO richiestaPermessoDTO,
+			@RequestParam(name="file", required=false) MultipartFile file, Attachment attachment,
+			@RequestParam(name="giornoSingolo", required=false) boolean giornoSingolo,
 			BindingResult result, Model model, RedirectAttributes redirectAttrs) {
-
+		
+		if (result.hasErrors()) 
+			return "permesso/insert";
+		
+		if (richiestaPermessoDTO.getTipoPermesso().equals(TipoPermesso.MALATTIA) && file == null) {
+			model.addAttribute("errorMessage", "Attenzione! Se il permesso è di tipo ferie è obbligatorio inserire un certificato valido");
+			return "permesso/insert";
+		}
+		
+		if (!giornoSingolo && (richiestaPermessoDTO.getDataFine() == null || richiestaPermessoDTO.getDataFine().compareTo(richiestaPermessoDTO.getDataInizio()) < 0)) {
+			model.addAttribute("errorMessage", "Attenzione! È presente un errore di validazione nel campo data fine");
+			model.addAttribute("insert_richiesta_attr", richiestaPermessoDTO);
+			return "permesso/insert";
+		}
+		
+		
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		Long idUtenteInSessione = utenteService.findByUsername(auth.getName()).getId();
 		

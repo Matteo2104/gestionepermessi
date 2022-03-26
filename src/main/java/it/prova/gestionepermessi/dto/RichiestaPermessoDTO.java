@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import javax.validation.constraints.NotNull;
 
 import it.prova.gestionepermessi.model.Attachment;
 import it.prova.gestionepermessi.model.Dipendente;
@@ -15,8 +16,10 @@ public class RichiestaPermessoDTO {
 	
 	private Long id;
 	
+	@NotNull(message="tipopermesso.notnull")
 	private TipoPermesso tipoPermesso;
 	
+	@NotNull(message="tipopermesso.notnull")
 	private Date dataInizio;
 	
 	private Date dataFine;
