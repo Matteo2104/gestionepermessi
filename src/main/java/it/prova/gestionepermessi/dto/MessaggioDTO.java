@@ -86,8 +86,8 @@ public class MessaggioDTO {
 	
 	
 	public static MessaggioDTO buildMessaggioDTOFromModel(Messaggio messaggioModel) {
-		MessaggioDTO result = new MessaggioDTO(messaggioModel.getId(), messaggioModel.getOggetto(),
-				messaggioModel.getTesto(), messaggioModel.getLetto());
+		MessaggioDTO result = new MessaggioDTO(messaggioModel.getId(), 
+				messaggioModel.getTesto(), messaggioModel.getOggetto(), messaggioModel.getLetto());
 		
 		//result.setDipendente(DipendenteDTO.buildDipendenteDTOFromModel(richiestaPermessoModel.getDipendente()));
 		

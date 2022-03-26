@@ -17,32 +17,41 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 import it.prova.gestionepermessi.model.Dipendente;
 import it.prova.gestionepermessi.model.RichiestaPermesso;
 import it.prova.gestionepermessi.model.Ruolo;
 import it.prova.gestionepermessi.model.Sesso;
 import it.prova.gestionepermessi.model.Utente;
+import it.prova.gestionepermessi.validation.ValidationNoPassword;
+import it.prova.gestionepermessi.validation.ValidationWithPassword;
 
 public class DipendenteDTO {
 	
 	private Long id;
 	
 	
+	@NotBlank(message = "{nome.notblank}")
 	private String nome;
 	
+	@NotBlank(message = "{cognome.notblank}")
 	private String cognome;
 	
+	@NotBlank(message = "{codFis.notblank}")
 	private String codFis;
 
 	private String email;
 
+	@NotNull(message = "{dataNascita.notnull}")
 	private Date dataNascita;
 
 	private Date dataAssunzione;
 
 	private Date dataDimissioni;
 	
+	@NotNull(message = "{sesso.notnull}")
 	private Sesso sesso;
 	
 	private UtenteDTO utente;

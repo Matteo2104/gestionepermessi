@@ -71,6 +71,7 @@
 			    	
 			    	<!-- info Richieste Permesso -->
 			    	<sec:authorize access="hasAnyRole('ROLE_DIPENDENTE_USER', 'ROLE_BO_USER')">
+			    	<c:if test="${show_richieste_attr != null }">
 			    	<p>
 					  <a class="btn btn-primary btn-sm" data-bs-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
 					    Richieste Permesso
@@ -110,6 +111,7 @@
 					  </div>
 					<!-- end info Ruoli -->
 					</div>
+					</c:if>
 			    	</sec:authorize>
 			    <!-- end card body -->
 			    </div>

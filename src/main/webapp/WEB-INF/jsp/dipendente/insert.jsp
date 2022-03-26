@@ -74,9 +74,9 @@
 								</div>
 							
 								 <div class="col-md-6">
-								<label for="dataNascita" class="form-label">Data di Nascita</label>
+								<label for="dataNascita" class="form-label">Data di Nascita <span class="text-danger">*</span></label>
                         		<input class="form-control" id="dataNascita" type="date" placeholder="dd/MM/yy"
-                            		title="formato : gg/mm/aaaa"  name="dataNascita" >
+                            		title="formato : gg/mm/aaaa"  name="dataNascita" required >
 								</div>
 								
 								<div class="col-md-6">
@@ -92,8 +92,8 @@
 								</div>
 								
 								<div class="col-md-3">
-									<label for="sesso" class="form-label">Sesso</label>
-									    <select class="form-select " id="sesso" name="sesso" >
+									<label for="sesso" class="form-label">Sesso <span class="text-danger">*</span></label>
+									    <select class="form-select " id="sesso" name="sesso" required >
 									    	<option value="" selected> - Selezionare - </option>
 									      	<option value="MASCHIO" >Maschio</option>
 									    	<option value="FEMMINA">Femmina</option>
@@ -109,10 +109,6 @@
 									    	<option value="3">Dipendente</option>
 								    	</select>
 								</div>
-								
-								
-								
-								
 								
 								
 								<div class="col-12">

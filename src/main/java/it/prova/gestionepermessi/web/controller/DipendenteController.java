@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -94,7 +95,9 @@ public class DipendenteController {
 		//System.out.println(utente);
 		
 		model.addAttribute("show_dipendente_attr", dipendenteDTO);
-		model.addAttribute("show_richieste_attr", RichiestaPermessoDTO.createRichiestaPermessoDTOListFromModelSet(dipendente.getRichiestePermesso()));
+		if (RichiestaPermessoDTO.createRichiestaPermessoDTOListFromModelSet(dipendente.getRichiestePermesso()).size() > 0) {
+			model.addAttribute("show_richieste_attr", RichiestaPermessoDTO.createRichiestaPermessoDTOListFromModelSet(dipendente.getRichiestePermesso()));
+		}
 		
 		return "dipendente/show";
 	}
@@ -145,8 +148,8 @@ public class DipendenteController {
 
 	@PostMapping("/save")
 	public String save(
-			@Validated(ValidationWithPassword.class) @ModelAttribute("insert_dipendente_attr") DipendenteDTO dipendenteDTO,
-			@RequestParam(name="idRuolo") Long idRuolo, 
+			@Valid @ModelAttribute("insert_dipendente_attr") DipendenteDTO dipendenteDTO,
+			@RequestParam(name="idRuolo", required=false) Long idRuolo, 
 			BindingResult result, Model model, RedirectAttributes redirectAttrs) {
 		
 		
@@ -157,12 +160,17 @@ public class DipendenteController {
 		 * !utenteDTO.getPassword().equals(utenteDTO.getConfermaPassword()))
 		 * result.rejectValue("confermaPassword", "password.diverse");
 		 */
-		/*
+		
 		if (result.hasErrors()) {
+			List<RuoloDTO> ruoliTotali = new ArrayList<>();
+			for (RuoloDTO ruolo : RuoloDTO.createRuoloDTOListFromModelList(ruoloService.listAll())) {
+				if (ruolo.getCodice().equals("ROLE_DIPENDENTE_USER") || ruolo.getCodice().equals("ROLE_BO_USER"))
+					ruoliTotali.add(ruolo);
+			}
 			model.addAttribute("ruoli_totali_attr", RuoloDTO.createRuoloDTOListFromModelList(ruoloService.listAll()));
 			return "dipendente/insert";
 		}
-		*/
+		
 		
 		dipendenteService.inserisciNuovo(dipendenteDTO.buildDipendenteModel(false), idRuolo);
 
