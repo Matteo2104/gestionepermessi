@@ -45,22 +45,14 @@
 							<form:form modelAttribute="edit_richiesta_attr"  method="post" action="${pageContext.request.contextPath }/permesso/update" novalidate="novalidate" class="row g-3">
 								<form:hidden path="id"/>
 								
-								<div class="col-md-3">
-									<label for="tipoPermesso" class="form-label">Tipologia Permesso </label>
-								    <select class="form-select" id="tipoPermesso" name="tipoPermesso" >
-								    	<option value="${edit_richiesta_attr.tipoPermesso }" selected> ${edit_richiesta_attr.tipoPermesso } </option>
-								      	<option value="FERIE" >Ferie</option>
-								      	<option value="MALATTIA" >Malattia</option>
-								    </select>
-								</div>
 								
-								<div class="col-md-6">
-									<label for="codiceCertificato" class="form-label">Codice Certificato </label>
-									<spring:bind path="codiceCertificato">
-										<input type="text" name="codiceCertificato" id="codiceCertificato" class="form-control" placeholder="Inserire codice certificato" value="${edit_richiesta_attr.codiceCertificato }" required >
-									</spring:bind>
-									<form:errors  path="codiceCertificato" cssClass="error_field" />
-								</div>
+								<div class="form-check">
+									  <input class="form-check-input" type="checkbox" value="${true }" id="giornoSingolo" >
+									  <label class="form-check-label" for="giornoSingolo">
+									    Giorno singolo
+									  </label>
+									</div>
+								
 								
 								<fmt:formatDate pattern='yyyy-MM-dd' var="parsedDate" type='date' value='${edit_richiesta_attr.dataInizio}' />
 								<div class="col-md-3">

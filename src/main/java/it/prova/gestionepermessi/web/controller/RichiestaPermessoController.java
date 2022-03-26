@@ -224,20 +224,6 @@ public class RichiestaPermessoController {
 			
 			richiestaPermesso.setAttachment(attachment);
 		}
-		
-
-		// System.out.println(utenteDTO);
-		/*
-		 * if (!result.hasFieldErrors("password") &&
-		 * !utenteDTO.getPassword().equals(utenteDTO.getConfermaPassword()))
-		 * result.rejectValue("confermaPassword", "password.diverse");
-		 */
-
-		/*
-		if (result.hasErrors()) {
-			return "permesso/insert";
-		}
-		*/
 
 		richiestaPermessoService.inserisciNuovo(idUtenteInSessione, richiestaPermesso);
 
@@ -264,9 +250,18 @@ public class RichiestaPermessoController {
 	}
 	@PostMapping("/update")
 	public String update(@ModelAttribute("edit_richiesta_attr") RichiestaPermessoDTO richiestaPermessoDTO,
+			@RequestParam(name="giornoSingolo", required=false) boolean giornoSingolo,
 			BindingResult result, Model model, RedirectAttributes redirectAttrs, HttpServletRequest request) {
 
 		if (result.hasErrors()) {
+			return "permesso/edit";
+		}
+		
+		
+		
+		if (!giornoSingolo && (richiestaPermessoDTO.getDataFine() == null || richiestaPermessoDTO.getDataFine().compareTo(richiestaPermessoDTO.getDataInizio()) < 0)) {
+			model.addAttribute("errorMessage", "Attenzione! È presente un errore di validazione nel campo data fine");
+			model.addAttribute("insert_richiesta_attr", richiestaPermessoDTO);
 			return "permesso/edit";
 		}
 

@@ -81,7 +81,7 @@
 									
 									
 									<div class="form-check">
-									  <input class="form-check-input" type="checkbox" value="" id="giornoSingolo" >
+									  <input class="form-check-input" type="checkbox" value="${true }" id="giornoSingolo" >
 									  <label class="form-check-label" for="giornoSingolo">
 									    Giorno singolo
 									  </label>

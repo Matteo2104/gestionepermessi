@@ -69,10 +69,8 @@ public class RichiestaPermessoServiceImpl implements RichiestaPermessoService {
 		
 		//System.out.println(richiestaPermessoReloaded.getDipendente());
 		
-		richiestaPermessoReloaded.setCodiceCertificato(richiestaPermesso.getCodiceCertificato());
 		richiestaPermessoReloaded.setDataInizio(richiestaPermesso.getDataInizio());
 		richiestaPermessoReloaded.setDataFine(richiestaPermesso.getDataFine());
-		richiestaPermessoReloaded.setTipoPermesso(richiestaPermesso.getTipoPermesso());
 		richiestaPermessoReloaded.setNote(richiestaPermesso.getNote());
 		
 		repository.save(richiestaPermessoReloaded);
