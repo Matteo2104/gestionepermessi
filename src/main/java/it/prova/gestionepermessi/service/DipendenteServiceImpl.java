@@ -115,7 +115,7 @@ public class DipendenteServiceImpl implements DipendenteService {
 		dipendenteReloaded.setDataAssunzione(dipendente.getDataAssunzione());
 		dipendenteReloaded.setDataDimissioni(dipendente.getDataDimissioni());
 
-		// devo modificare anche i ruoli
+		
 		
 		//utenteRepository.save(dipendente.getUtente());
 		repository.save(dipendenteReloaded);

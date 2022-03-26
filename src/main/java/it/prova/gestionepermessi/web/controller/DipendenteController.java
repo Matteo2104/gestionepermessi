@@ -111,19 +111,14 @@ public class DipendenteController {
 		
 		model.addAttribute("edit_dipendente_attr", DipendenteDTO.buildDipendenteDTOFromModel(dipendenteModel));
 		
-		
-		
-		model.addAttribute("ruoli_totali_attr", RuoloDTO.createRuoloDTOListFromModelList(ruoloService.listAll()));
-
 		//System.out.println("\n\n SONO QUI \n\n");
 		return "dipendente/edit";
 	}
 	@PostMapping("/update")
-	public String update(@Validated(ValidationNoPassword.class) @ModelAttribute("edit_dipendente_attr") DipendenteDTO dipendenteDTO,
+	public String update(@Valid @ModelAttribute("edit_dipendente_attr") DipendenteDTO dipendenteDTO,
 			BindingResult result, Model model, RedirectAttributes redirectAttrs, HttpServletRequest request) {
 
 		if (result.hasErrors()) {
-			model.addAttribute("ruoli_totali_attr", RuoloDTO.createRuoloDTOListFromModelList(ruoloService.listAll()));
 			return "dipendente/edit";
 		}
 		

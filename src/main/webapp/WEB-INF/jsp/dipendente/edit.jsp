@@ -67,6 +67,14 @@
 									<form:errors  path="cognome" cssClass="error_field" />
 								</div>
 								
+								<div class="col-md-6">
+									<label for="codFis" class="form-label">Codice Fiscale <span class="text-danger">*</span></label>
+									<spring:bind path="codFis">
+										<input type="text" name="codFis" id="codFis" class="form-control ${status.error ? 'is-invalid' : ''}" placeholder="Inserire il codice fiscale" value="${insert_dipendente_attr.codFis }" required>
+									</spring:bind>
+									<form:errors  path="codFis" cssClass="error_field" />
+								</div>
+								
 								<fmt:formatDate pattern='yyyy-MM-dd' var="parsedDate" type='date' value='${edit_dipendente_attr.dataNascita}' />
 								<div class="col-md-3">
 									<label for="dataNascita" class="form-label">Data di Nascita <span class="text-danger">*</span></label>
@@ -99,29 +107,24 @@
 		                            </spring:bind>
 	                            	<form:errors  path="dataDimissioni" cssClass="error_field" />
 								</div>
+								
+								<div class="col-md-3">
+									<label for="sesso" class="form-label">Sesso <span class="text-danger">*</span></label>
+										<spring:bind path="sesso">
+									    <select class="form-select " id="sesso" name="sesso" required >
+									    	<option value="" selected> - Selezionare - </option>
+									      	<option value="MASCHIO" >Maschio</option>
+									    	<option value="FEMMINA">Femmina</option>
+								    	</select>
+								    	</spring:bind>
+								    	<form:errors  path="sesso" cssClass="error_field" />
+								    	
+								</div>
 						
 								
 								 
 								
-								<%--  checkbox ruoli 	--%>
-								<%-- facendolo con i tag di spring purtroppo viene un po' spaginato quindi aggiungo class 'a mano'	--%>
-								<div class="col-md-6 form-check" id="ruoliDivId">
-									<p>Ruoli:</p>
-									<form:checkboxes itemValue="id" itemLabel="codice"  element="div class='form-check'" items="${ruoli_totali_attr}" path="utente" />
-								</div>
-								<script>
-									$(document).ready(function(){
-										
-										$("#ruoliDivId :input").each(function () {
-											$(this).addClass('form-check-input'); 
-										});
-										$("#ruoliDivId label").each(function () {
-											$(this).addClass('form-check-label'); 
-										});
-										
-									});
-								</script>
-								<%-- fine checkbox ruoli 	--%>
+								
 								
 								
 								<div class="col-12">

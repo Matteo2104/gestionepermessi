@@ -6,7 +6,7 @@
 <head>
 	<!-- Common imports in pages -->
 	<jsp:include page="../header.jsp" />
-	<title>Visualizza Utente</title>
+	<title>Visualizza Dipendente</title>
 	
 </head>
 <body class="d-flex flex-column h-100">
@@ -19,7 +19,7 @@
 			
 			<div class='card'>
 			    <div class='card-header'>
-			        Visualizza dettaglio Utente
+			        Visualizza dettaglio Dipendente
 			    </div>
 			
 			    <div class='card-body'>
